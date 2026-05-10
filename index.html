@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimizer SS6 - Super AI Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Prompt', sans-serif; }
+        .blueprint-bg {
+            background-color: #f8fafc;
+            background-image: linear-gradient(rgba(14, 165, 233, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(14, 165, 233, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); }
+        .tag { font-size: 0.7rem; }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0ea5e9', // Sky blue
+                        secondary: '#0f172a', // Slate 900
+                        accent: '#38bdf8',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased">
+
+    <!-- Navigation Bar -->
+    <nav class="fixed w-full bg-white/90 backdrop-blur-md shadow-sm z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <i class="fa-solid fa-microchip text-primary text-2xl mr-2"></i>
+                    <span class="font-bold text-xl text-secondary">OPTIMIZER <span class="text-primary">SS6</span></span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-gray-600 hover:text-primary font-medium transition">หน้าแรก</a>
+                    <a href="#about" class="text-gray-600 hover:text-primary font-medium transition">เกี่ยวกับเรา</a>
+                    <a href="#members" class="text-gray-600 hover:text-primary font-medium transition">สมุดพกนักพัฒนา</a>
+                    <a href="#gallery" class="text-gray-600 hover:text-primary font-medium transition">แกลเลอรี่</a>
+                    <a href="#recognition" class="text-gray-600 hover:text-primary font-medium transition">หอเกียรติยศ</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-primary focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg absolute w-full">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="block px-3 py-2 text-gray-600 hover:text-primary font-medium">หน้าแรก</a>
+                <a href="#about" class="block px-3 py-2 text-gray-600 hover:text-primary font-medium">เกี่ยวกับเรา</a>
+                <a href="#members" class="block px-3 py-2 text-gray-600 hover:text-primary font-medium">สมุดพกนักพัฒนา</a>
+                <a href="#gallery" class="block px-3 py-2 text-gray-600 hover:text-primary font-medium">แกลเลอรี่</a>
+                <a href="#recognition" class="block px-3 py-2 text-gray-600 hover:text-primary font-medium">หอเกียรติยศ</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home (Hero Section) -->
+    <section id="home" class="pt-24 pb-20 md:pt-32 md:pb-28 blueprint-bg relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto">
+                <div class="inline-block p-3 bg-white rounded-2xl shadow-sm mb-6 border border-gray-100">
+                    <i class="fa-solid fa-robot text-primary text-4xl mb-2"></i>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold text-secondary mb-4 leading-tight">
+                    บ้าน <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">Optimizer</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-600 mb-8 font-medium">
+                    "โครงสร้างสถาปัตยกรรมแห่งความทรงจำ"
+                </p>
+                <p class="text-gray-500 mb-10 text-lg">
+                    Super AI Engineer Season 6<br>
+                    มากกว่าเว็บไซต์ แต่คือพื้นที่เก็บความทรงจำและ Digital Yearbook ของพวกเราทุกคน
+                </p>
+                <div class="flex justify-center gap-4">
+                    <a href="#members" class="bg-primary hover:bg-blue-600 text-white px-8 py-3 rounded-full font-medium transition shadow-lg shadow-blue-500/30">
+                        ทำความรู้จักพวกเรา
+                    </a>
+                    <a href="#gallery" class="bg-white hover:bg-gray-50 text-secondary border border-gray-200 px-8 py-3 rounded-full font-medium transition shadow-sm">
+                        ดูผลงาน
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us (ประตูบานแรก) -->
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-secondary mb-4">ประตูบานแรกที่สะท้อนอัตลักษณ์</h2>
+                <p class="text-gray-500 max-w-2xl mx-auto text-lg">หน้า About Us คือการประกาศตัวตน เผยให้เห็น DNA ของทีมที่หล่อหลอมรวมกัน</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- โลโก้บ้าน -->
+                <div class="card-hover bg-gray-50 rounded-2xl p-8 text-center border border-gray-100">
+                    <div class="w-20 h-20 mx-auto bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-building-columns text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">โลโก้บ้าน</h3>
+                    <p class="text-gray-500 text-sm">สัญลักษณ์หลักประจำทีม ที่สื่อถึงความมั่นคงและรากฐานทางเทคโนโลยี</p>
+                </div>
+                <!-- สัญลักษณ์บ้าน -->
+                <div class="card-hover bg-gray-50 rounded-2xl p-8 text-center border border-gray-100">
+                    <div class="w-20 h-20 mx-auto bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-shield-halved text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">สัญลักษณ์บ้าน</h3>
+                    <p class="text-gray-500 text-sm">ไอคอนแห่งความภาคภูมิใจและจิตวิญญาณของ Optimizer</p>
+                </div>
+                <!-- แบบเสื้อบ้าน -->
+                <div class="card-hover bg-gray-50 rounded-2xl p-8 text-center border border-gray-100">
+                    <div class="w-20 h-20 mx-auto bg-cyan-100 text-cyan-600 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-shirt text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">แบบเสื้อบ้าน</h3>
+                    <p class="text-gray-500 text-sm">เอกลักษณ์การแต่งกายของสมาชิก ที่หลอมรวมทุกคนเป็นหนึ่งเดียว</p>
+                </div>
+                <!-- คำขวัญ -->
+                <div class="card-hover bg-gray-50 rounded-2xl p-8 text-center border border-gray-100">
+                    <div class="w-20 h-20 mx-auto bg-teal-100 text-teal-600 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-quote-left text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">คำขวัญ</h3>
+                    <p class="text-gray-500 text-sm">"พัฒนาอย่างไม่หยุดยั้ง เพื่อผลลัพธ์ที่ดีที่สุด" (วลีที่แสดงจุดยืน)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Members (สมุดพกนักพัฒนา) -->
+    <section id="members" class="py-20 blueprint-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-secondary mb-4">สมุดพกนักพัฒนา</h2>
+                <p class="text-gray-500 max-w-2xl mx-auto text-lg">บันทึกตัวตนสมาชิกทุกคน โชว์ความเชี่ยวชาญและ Passion ด้าน AI</p>
+            </div>
+
+            <!-- Profile Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Card 1 -->
+                <div class="card-hover bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="h-24 bg-gradient-to-r from-cyan-400 to-blue-500 relative"></div>
+                    <div class="px-6 pb-6 relative">
+                        <img src="https://ui-avatars.com/api/?name=Somchai&background=e2e8f0&color=64748b&size=128" alt="Profile" class="w-20 h-20 rounded-full border-4 border-white absolute -top-10 left-6 shadow-sm object-cover">
+                        <div class="pt-12">
+                            <p class="text-xs text-gray-400 font-mono mb-1">รหัส: OPT-001</p>
+                            <h3 class="text-lg font-bold text-secondary">สมชาย ใจดี (บอย)</h3>
+                            <p class="text-sm text-gray-500 mb-3 italic">"Code never lies."</p>
+                            
+                            <div class="mt-4 border-t pt-4">
+                                <p class="text-xs text-gray-500 mb-2 font-medium">ความสนใจด้าน AI:</p>
+                                <div class="flex flex-wrap gap-1">
+                                    <span class="tag bg-orange-100 text-orange-700 px-2 py-1 rounded-md">🚀 Machine Learning</span>
+                                    <span class="tag bg-blue-100 text-blue-700 px-2 py-1 rounded-md">👁️ Computer Vision</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="card-hover bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="h-24 bg-gradient-to-r from-purple-400 to-indigo-500 relative"></div>
+                    <div class="px-6 pb-6 relative">
+                        <img src="https://ui-avatars.com/api/?name=Wipawa&background=e2e8f0&color=64748b&size=128" alt="Profile" class="w-20 h-20 rounded-full border-4 border-white absolute -top-10 left-6 shadow-sm object-cover">
+                        <div class="pt-12">
+                            <p class="text-xs text-gray-400 font-mono mb-1">รหัส: OPT-002</p>
+                            <h3 class="text-lg font-bold text-secondary">วิภาวา สุขสม (เจน)</h3>
+                            <p class="text-sm text-gray-500 mb-3 italic">"Language is the key."</p>
+                            
+                            <div class="mt-4 border-t pt-4">
+                                <p class="text-xs text-gray-500 mb-2 font-medium">ความสนใจด้าน AI:</p>
+                                <div class="flex flex-wrap gap-1">
+                                    <span class="tag bg-green-100 text-green-700 px-2 py-1 rounded-md">💬 NLP</span>
+                                    <span class="tag bg-pink-100 text-pink-700 px-2 py-1 rounded-md">✨ Generative AI</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="card-hover bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="h-24 bg-gradient-to-r from-emerald-400 to-teal-500 relative"></div>
+                    <div class="px-6 pb-6 relative">
+                        <img src="https://ui-avatars.com/api/?name=Kittisak&background=e2e8f0&color=64748b&size=128" alt="Profile" class="w-20 h-20 rounded-full border-4 border-white absolute -top-10 left-6 shadow-sm object-cover">
+                        <div class="pt-12">
+                            <p class="text-xs text-gray-400 font-mono mb-1">รหัส: OPT-003</p>
+                            <h3 class="text-lg font-bold text-secondary">กิตติศักดิ์ พล (เอก)</h3>
+                            <p class="text-sm text-gray-500 mb-3 italic">"Data drives decisions."</p>
+                            
+                            <div class="mt-4 border-t pt-4">
+                                <p class="text-xs text-gray-500 mb-2 font-medium">ความสนใจด้าน AI:</p>
+                                <div class="flex flex-wrap gap-1">
+                                    <span class="tag bg-orange-100 text-orange-700 px-2 py-1 rounded-md">🚀 Machine Learning</span>
+                                    <span class="tag bg-gray-100 text-gray-700 px-2 py-1 rounded-md">⚖️ AI Ethics</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="card-hover bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col justify-center items-center h-full min-h-[300px] border-dashed">
+                    <i class="fa-solid fa-user-plus text-gray-300 text-4xl mb-3"></i>
+                    <p class="text-gray-400 font-medium">ดูสมาชิกทั้งหมด</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Timeline (Memory Capsules) -->
+    <section class="py-20 bg-white border-b border-gray-100">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-secondary mb-4">Memory Capsules</h2>
+                <p class="text-gray-500">การเดินทางใน Super AI Engineer Level-2 ที่เต็มไปด้วยความท้าทาย การเรียนรู้ และมิตรภาพ</p>
+            </div>
+            
+            <div class="relative border-l-2 border-primary ml-3 md:ml-1/2">
+                <!-- Milestone 1 -->
+                <div class="mb-10 ml-8 relative">
+                    <div class="absolute -left-10 mt-1.5 w-4 h-4 rounded-full bg-primary ring-4 ring-blue-50"></div>
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-100 shadow-sm">
+                        <span class="text-primary font-bold text-sm">สัปดาห์ที่ 1-2</span>
+                        <h3 class="text-lg font-bold text-secondary mt-1">Project Milestones</h3>
+                        <p class="text-gray-500 text-sm mt-2">เริ่มต้นการเดินทาง แบ่งทีม และวางโครงสร้างสถาปัตยกรรมของโปรเจกต์</p>
+                    </div>
+                </div>
+                <!-- Milestone 2 -->
+                <div class="mb-10 ml-8 relative">
+                    <div class="absolute -left-10 mt-1.5 w-4 h-4 rounded-full bg-primary ring-4 ring-blue-50"></div>
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-100 shadow-sm">
+                        <span class="text-primary font-bold text-sm">สัปดาห์ที่ 3-4</span>
+                        <h3 class="text-lg font-bold text-secondary mt-1">Team Contributions</h3>
+                        <p class="text-gray-500 text-sm mt-2">ลุยพัฒนาโมเดล AI, แบ่งงานกันทำ ทั้งสาย Data, Model และ Deployment</p>
+                    </div>
+                </div>
+                <!-- Milestone 3 -->
+                <div class="ml-8 relative">
+                    <div class="absolute -left-10 mt-1.5 w-4 h-4 rounded-full bg-primary ring-4 ring-blue-50"></div>
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-100 shadow-sm">
+                        <span class="text-primary font-bold text-sm">สัปดาห์สุดท้าย</span>
+                        <h3 class="text-lg font-bold text-secondary mt-1">Legacy Archives</h3>
+                        <p class="text-gray-500 text-sm mt-2">รวบรวมผลงาน นำเสนอโปรเจกต์ และบันทึกความทรงจำลงใน Digital Yearbook แห่งนี้</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery & Recognition -->
+    <section id="gallery" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-secondary mb-4">หอเกียรติยศและแกลเลอรี่ความทรงจำ</h2>
+                <p class="text-gray-500 max-w-2xl mx-auto text-lg">พื้นที่สำหรับการเฉลิมฉลองความสำเร็จและเก็บเกี่ยวช่วงเวลาที่มีค่าตลอดโครงการ</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12" id="recognition">
+                
+                <!-- Gallery Section -->
+                <div>
+                    <h3 class="text-2xl font-bold text-secondary mb-6 flex items-center"><i class="fa-solid fa-images text-primary mr-3"></i> ประมวลภาพกิจกรรม</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        <!-- Placeholder Images -->
+                        <div class="bg-gray-200 aspect-square rounded-lg overflow-hidden card-hover">
+                            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=300&q=80" alt="Team" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-300">
+                        </div>
+                        <div class="bg-gray-200 aspect-square rounded-lg overflow-hidden card-hover">
+                            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=300&q=80" alt="Work" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-300">
+                        </div>
+                        <div class="bg-gray-200 aspect-square rounded-lg overflow-hidden card-hover">
+                            <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=300&q=80" alt="Meeting" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-300">
+                        </div>
+                        <div class="bg-gray-200 aspect-square rounded-lg overflow-hidden card-hover">
+                            <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=300&q=80" alt="Tech" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-300">
+                        </div>
+                        <div class="bg-gray-200 aspect-square rounded-lg overflow-hidden card-hover">
+                            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=300&q=80" alt="Presentation" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-300">
+                        </div>
+                        <div class="bg-blue-50 aspect-square rounded-lg overflow-hidden flex items-center justify-center border border-blue-100 card-hover cursor-pointer">
+                            <span class="text-primary font-medium text-sm">+ ดูรูปทั้งหมด</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recognition Section -->
+                <div>
+                    <h3 class="text-2xl font-bold text-secondary mb-6 flex items-center"><i class="fa-solid fa-award text-yellow-500 mr-3"></i> รางวัลผลงานของบ้าน</h3>
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                        <div class="space-y-4">
+                            <!-- Award 1 -->
+                            <div class="flex items-center p-4 bg-gray-50 rounded-xl border border-gray-100 card-hover">
+                                <div class="w-12 h-12 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center flex-shrink-0 text-xl">
+                                    <i class="fa-solid fa-trophy"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="font-bold text-secondary">Best Innovation Award</h4>
+                                    <p class="text-sm text-gray-500">รางวัลนวัตกรรมยอดเยี่ยม ประจำปี 2026</p>
+                                </div>
+                            </div>
+                            <!-- Award 2 -->
+                            <div class="flex items-center p-4 bg-gray-50 rounded-xl border border-gray-100 card-hover">
+                                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0 text-xl">
+                                    <i class="fa-solid fa-medal"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="font-bold text-secondary">Best Team Project</h4>
+                                    <p class="text-sm text-gray-500">ผลงานโปรเจกต์กลุ่มยอดเยี่ยม</p>
+                                </div>
+                            </div>
+                            <!-- Award 3 -->
+                            <div class="flex items-center p-4 bg-gray-50 rounded-xl border border-gray-100 card-hover">
+                                <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center flex-shrink-0 text-xl">
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="font-bold text-secondary">Milestone Achievement</h4>
+                                    <p class="text-sm text-gray-500">รางวัลความสำเร็จตามเป้าหมายของทีม</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+            <div>
+                <div class="flex justify-center md:justify-start items-center mb-4">
+                    <i class="fa-solid fa-microchip text-primary text-2xl mr-2"></i>
+                    <span class="font-bold text-xl">OPTIMIZER <span class="text-primary">SS6</span></span>
+                </div>
+                <p class="text-gray-400 text-sm">พื้นที่แห่งความทรงจำของเหล่านวัตกรและวิศวกร AI</p>
+            </div>
+            <div class="flex justify-center space-x-6">
+                <a href="#" class="text-gray-400 hover:text-white transition"><i class="fa-brands fa-facebook text-2xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition"><i class="fa-brands fa-github text-2xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition"><i class="fa-solid fa-envelope text-2xl"></i></a>
+            </div>
+            <div class="md:text-right text-gray-400 text-sm">
+                <p>&copy; 2026 Optimizer Super AI Engineer SS6.</p>
+                <p>All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script for mobile menu -->
+    <script>
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Add shadow to navbar on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 10) {
+                nav.classList.add('shadow-md');
+            } else {
+                nav.classList.remove('shadow-md');
+            }
+        });
+    </script>
+</body>
+</html>
