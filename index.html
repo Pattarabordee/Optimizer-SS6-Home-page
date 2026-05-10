@@ -722,6 +722,20 @@
 
         const validUrl = (url) => /^https?:\/\//.test(String(url ?? '').trim());
 
+        const normalizeImageUrl = (url) => {
+            const value = String(url ?? '').trim();
+            if (!validUrl(value)) return '';
+
+            const driveFileMatch = value.match(/drive\.google\.com\/file\/d\/([^/?#]+)/);
+            const driveIdMatch = value.match(/[?&]id=([^&#]+)/);
+            const driveId = driveFileMatch?.[1] || driveIdMatch?.[1];
+            if (driveId) {
+                return `https://drive.google.com/thumbnail?id=${encodeURIComponent(driveId)}&sz=w400`;
+            }
+
+            return value;
+        };
+
         const cellValue = (cell) => String(cell?.f ?? cell?.v ?? '').trim();
 
         const sheetRowsToMembers = (response) => {
@@ -739,6 +753,7 @@
                     interests: cellValue(cells[9]),
                     video: cellValue(cells[10]),
                     videoTitle: cellValue(cells[11]),
+                    imageUrl: cellValue(cells[12]),
                 };
             }).filter((member) => [
                 member.code,
@@ -750,6 +765,7 @@
                 member.motto,
                 member.interests,
                 member.video,
+                member.imageUrl,
             ].some(Boolean));
         };
 
@@ -897,6 +913,8 @@
                 const displayName = [member.firstName, member.lastName].filter(Boolean).join(' ') || member.nickTh || member.nickEn || 'Optimizer';
                 const nickname = [member.nickTh, member.nickEn].filter(Boolean).join(' / ');
                 const avatarName = encodeURIComponent(member.nickEn || member.nickTh || member.firstName || 'Optimizer');
+                const fallbackAvatarUrl = `https://ui-avatars.com/api/?name=${avatarName}&background=111111&color=ffd60a&bold=true&size=128`;
+                const profileImageUrl = normalizeImageUrl(member.imageUrl);
                 const instagram = cleanInstagram(member.instagram);
                 const interests = splitInterests(member.interests);
                 const interestTags = interests.length
@@ -913,7 +931,7 @@
                     <article class="member-card card-hover bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                         <div class="h-24 theme-member-top relative"></div>
                         <div class="px-6 pb-6 relative">
-                            <img src="https://ui-avatars.com/api/?name=${avatarName}&background=111111&color=ffd60a&bold=true&size=128" alt="${escapeHtml(displayName)}" class="w-20 h-20 rounded-full border-4 border-white absolute -top-10 left-6 shadow-sm object-cover">
+                            <img src="${escapeHtml(profileImageUrl || fallbackAvatarUrl)}" alt="${escapeHtml(displayName)}" class="w-20 h-20 rounded-full border-4 border-white absolute -top-10 left-6 shadow-sm object-cover bg-secondary" onerror="this.onerror=null;this.src='${escapeHtml(fallbackAvatarUrl)}';">
                             <div class="pt-12">
                                 <p class="text-xs text-gray-400 font-mono mb-1">${member.code ? `รหัส: ${escapeHtml(member.code)}` : 'OPTIMIZER SS6'}</p>
                                 <h3 class="text-lg font-bold text-secondary leading-snug">${escapeHtml(displayName)}</h3>
