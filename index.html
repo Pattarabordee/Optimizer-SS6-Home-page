@@ -10,23 +10,41 @@
     <style>
         body { font-family: 'Prompt', sans-serif; }
         .blueprint-bg {
-            background-color: #f8fafc;
-            background-image: linear-gradient(rgba(14, 165, 233, 0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(14, 165, 233, 0.1) 1px, transparent 1px);
-            background-size: 20px 20px;
+            background-color: #fffbeb;
+            background-image: radial-gradient(circle at top, rgba(255, 214, 10, 0.18), transparent 32rem),
+            linear-gradient(rgba(245, 158, 11, 0.12) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(245, 158, 11, 0.12) 1px, transparent 1px);
+            background-repeat: no-repeat, repeat, repeat;
+            background-size: auto, 20px 20px, 20px 20px;
         }
         .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
         .card-hover:hover { transform: translateY(-5px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); }
         .tag { font-size: 0.7rem; }
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffd60a;
+            filter: drop-shadow(0 5px 10px rgba(255, 214, 10, 0.25));
+        }
+        .brand-mark svg {
+            width: 1em;
+            height: 1em;
+            display: block;
+        }
+        .hero-logo {
+            background: radial-gradient(circle at 50% 42%, #1f1f1f 0%, #060606 68%);
+            box-shadow: 0 18px 45px rgba(17, 17, 17, 0.25), inset 0 0 0 1px rgba(255, 214, 10, 0.2);
+        }
     </style>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: '#0ea5e9', // Sky blue
-                        secondary: '#0f172a', // Slate 900
-                        accent: '#38bdf8',
+                        primary: '#ffd60a',
+                        secondary: '#111111',
+                        accent: '#f59e0b',
                     }
                 }
             }
@@ -40,7 +58,12 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
-                    <i class="fa-solid fa-microchip text-primary text-2xl mr-2"></i>
+                    <span class="brand-mark text-3xl mr-2" aria-hidden="true">
+                        <svg viewBox="0 0 128 128" fill="currentColor" role="img">
+                            <path d="M79 18c-16 6-30 18-41 36H25L13 70l20-3-24 32 36-28-4 22 16-13V66c20-12 34-28 40-48H79Zm3 27a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"/>
+                            <path d="M30 38a44 44 0 0 1 40-19l-8 9a32 32 0 0 0-23 9 33 33 0 0 0-9 29l-10 8A44 44 0 0 1 30 38Zm61 26 9-9a44 44 0 0 1-45 54l9-10a33 33 0 0 0 27-35Z"/>
+                        </svg>
+                    </span>
                     <span class="font-bold text-xl text-secondary">OPTIMIZER <span class="text-primary">SS6</span></span>
                 </div>
                 <div class="hidden md:flex space-x-8">
@@ -73,11 +96,16 @@
     <section id="home" class="pt-24 pb-20 md:pt-32 md:pb-28 blueprint-bg relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center max-w-3xl mx-auto">
-                <div class="inline-block p-3 bg-white rounded-2xl shadow-sm mb-6 border border-gray-100">
-                    <i class="fa-solid fa-robot text-primary text-4xl mb-2"></i>
+                <div class="inline-flex hero-logo rounded-2xl p-5 mb-6 border border-yellow-300/30">
+                    <span class="brand-mark text-7xl" aria-label="Optimizer rocket logo">
+                        <svg viewBox="0 0 128 128" fill="currentColor" role="img">
+                            <path d="M79 18c-16 6-30 18-41 36H25L13 70l20-3-24 32 36-28-4 22 16-13V66c20-12 34-28 40-48H79Zm3 27a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"/>
+                            <path d="M30 38a44 44 0 0 1 40-19l-8 9a32 32 0 0 0-23 9 33 33 0 0 0-9 29l-10 8A44 44 0 0 1 30 38Zm61 26 9-9a44 44 0 0 1-45 54l9-10a33 33 0 0 0 27-35Z"/>
+                        </svg>
+                    </span>
                 </div>
                 <h1 class="text-4xl md:text-6xl font-bold text-secondary mb-4 leading-tight">
-                    บ้าน <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">Optimizer</span>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-amber-400 to-yellow-600">Optimizer</span>
                 </h1>
                 <p class="text-xl md:text-2xl text-gray-600 mb-8 font-medium">
                     "โครงสร้างสถาปัตยกรรมแห่งความทรงจำ"
@@ -87,10 +115,10 @@
                     มากกว่าเว็บไซต์ แต่คือพื้นที่เก็บความทรงจำและ Digital Yearbook ของพวกเราทุกคน
                 </p>
                 <div class="flex justify-center gap-4">
-                    <a href="#members" class="bg-primary hover:bg-blue-600 text-white px-8 py-3 rounded-full font-medium transition shadow-lg shadow-blue-500/30">
+                    <a href="#members" class="bg-secondary hover:bg-black text-primary px-8 py-3 rounded-full font-medium transition shadow-lg shadow-yellow-500/30">
                         ทำความรู้จักพวกเรา
                     </a>
-                    <a href="#gallery" class="bg-white hover:bg-gray-50 text-secondary border border-gray-200 px-8 py-3 rounded-full font-medium transition shadow-sm">
+                    <a href="#gallery" class="bg-primary hover:bg-yellow-400 text-secondary border border-yellow-300 px-8 py-3 rounded-full font-medium transition shadow-sm">
                         ดูผลงาน
                     </a>
                 </div>
@@ -109,7 +137,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- โลโก้บ้าน -->
                 <div class="card-hover bg-gray-50 rounded-2xl p-8 text-center border border-gray-100">
-                    <div class="w-20 h-20 mx-auto bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-6">
+                    <div class="w-20 h-20 mx-auto bg-yellow-100 text-yellow-700 rounded-full flex items-center justify-center mb-6">
                         <i class="fa-solid fa-building-columns text-3xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-2">โลโก้บ้าน</h3>
@@ -117,15 +145,20 @@
                 </div>
                 <!-- สัญลักษณ์บ้าน -->
                 <div class="card-hover bg-gray-50 rounded-2xl p-8 text-center border border-gray-100">
-                    <div class="w-20 h-20 mx-auto bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mb-6">
-                        <i class="fa-solid fa-shield-halved text-3xl"></i>
+                    <div class="w-20 h-20 mx-auto bg-secondary text-primary rounded-full flex items-center justify-center mb-6">
+                        <span class="brand-mark text-4xl" aria-hidden="true">
+                            <svg viewBox="0 0 128 128" fill="currentColor" role="img">
+                                <path d="M79 18c-16 6-30 18-41 36H25L13 70l20-3-24 32 36-28-4 22 16-13V66c20-12 34-28 40-48H79Zm3 27a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"/>
+                                <path d="M30 38a44 44 0 0 1 40-19l-8 9a32 32 0 0 0-23 9 33 33 0 0 0-9 29l-10 8A44 44 0 0 1 30 38Zm61 26 9-9a44 44 0 0 1-45 54l9-10a33 33 0 0 0 27-35Z"/>
+                            </svg>
+                        </span>
                     </div>
                     <h3 class="text-xl font-bold mb-2">สัญลักษณ์บ้าน</h3>
                     <p class="text-gray-500 text-sm">ไอคอนแห่งความภาคภูมิใจและจิตวิญญาณของ Optimizer</p>
                 </div>
                 <!-- แบบเสื้อบ้าน -->
                 <div class="card-hover bg-gray-50 rounded-2xl p-8 text-center border border-gray-100">
-                    <div class="w-20 h-20 mx-auto bg-cyan-100 text-cyan-600 rounded-full flex items-center justify-center mb-6">
+                    <div class="w-20 h-20 mx-auto bg-amber-100 text-amber-700 rounded-full flex items-center justify-center mb-6">
                         <i class="fa-solid fa-shirt text-3xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-2">แบบเสื้อบ้าน</h3>
@@ -133,7 +166,7 @@
                 </div>
                 <!-- คำขวัญ -->
                 <div class="card-hover bg-gray-50 rounded-2xl p-8 text-center border border-gray-100">
-                    <div class="w-20 h-20 mx-auto bg-teal-100 text-teal-600 rounded-full flex items-center justify-center mb-6">
+                    <div class="w-20 h-20 mx-auto bg-zinc-100 text-zinc-800 rounded-full flex items-center justify-center mb-6">
                         <i class="fa-solid fa-quote-left text-3xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-2">คำขวัญ</h3>
@@ -156,7 +189,7 @@
                 
                 <!-- Card 1 -->
                 <div class="card-hover bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                    <div class="h-24 bg-gradient-to-r from-cyan-400 to-blue-500 relative"></div>
+                    <div class="h-24 bg-gradient-to-r from-yellow-300 to-amber-500 relative"></div>
                     <div class="px-6 pb-6 relative">
                         <img src="https://ui-avatars.com/api/?name=Somchai&background=e2e8f0&color=64748b&size=128" alt="Profile" class="w-20 h-20 rounded-full border-4 border-white absolute -top-10 left-6 shadow-sm object-cover">
                         <div class="pt-12">
@@ -168,7 +201,7 @@
                                 <p class="text-xs text-gray-500 mb-2 font-medium">ความสนใจด้าน AI:</p>
                                 <div class="flex flex-wrap gap-1">
                                     <span class="tag bg-orange-100 text-orange-700 px-2 py-1 rounded-md">🚀 Machine Learning</span>
-                                    <span class="tag bg-blue-100 text-blue-700 px-2 py-1 rounded-md">👁️ Computer Vision</span>
+                                    <span class="tag bg-yellow-100 text-yellow-800 px-2 py-1 rounded-md">👁️ Computer Vision</span>
                                 </div>
                             </div>
                         </div>
@@ -177,7 +210,7 @@
 
                 <!-- Card 2 -->
                 <div class="card-hover bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                    <div class="h-24 bg-gradient-to-r from-purple-400 to-indigo-500 relative"></div>
+                    <div class="h-24 bg-gradient-to-r from-zinc-900 to-yellow-500 relative"></div>
                     <div class="px-6 pb-6 relative">
                         <img src="https://ui-avatars.com/api/?name=Wipawa&background=e2e8f0&color=64748b&size=128" alt="Profile" class="w-20 h-20 rounded-full border-4 border-white absolute -top-10 left-6 shadow-sm object-cover">
                         <div class="pt-12">
@@ -198,7 +231,7 @@
 
                 <!-- Card 3 -->
                 <div class="card-hover bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                    <div class="h-24 bg-gradient-to-r from-emerald-400 to-teal-500 relative"></div>
+                    <div class="h-24 bg-gradient-to-r from-amber-500 to-zinc-900 relative"></div>
                     <div class="px-6 pb-6 relative">
                         <img src="https://ui-avatars.com/api/?name=Kittisak&background=e2e8f0&color=64748b&size=128" alt="Profile" class="w-20 h-20 rounded-full border-4 border-white absolute -top-10 left-6 shadow-sm object-cover">
                         <div class="pt-12">
@@ -238,7 +271,7 @@
             <div class="relative border-l-2 border-primary ml-3 md:ml-1/2">
                 <!-- Milestone 1 -->
                 <div class="mb-10 ml-8 relative">
-                    <div class="absolute -left-10 mt-1.5 w-4 h-4 rounded-full bg-primary ring-4 ring-blue-50"></div>
+                    <div class="absolute -left-10 mt-1.5 w-4 h-4 rounded-full bg-primary ring-4 ring-yellow-100"></div>
                     <div class="bg-gray-50 p-6 rounded-xl border border-gray-100 shadow-sm">
                         <span class="text-primary font-bold text-sm">สัปดาห์ที่ 1-2</span>
                         <h3 class="text-lg font-bold text-secondary mt-1">Project Milestones</h3>
@@ -247,7 +280,7 @@
                 </div>
                 <!-- Milestone 2 -->
                 <div class="mb-10 ml-8 relative">
-                    <div class="absolute -left-10 mt-1.5 w-4 h-4 rounded-full bg-primary ring-4 ring-blue-50"></div>
+                    <div class="absolute -left-10 mt-1.5 w-4 h-4 rounded-full bg-primary ring-4 ring-yellow-100"></div>
                     <div class="bg-gray-50 p-6 rounded-xl border border-gray-100 shadow-sm">
                         <span class="text-primary font-bold text-sm">สัปดาห์ที่ 3-4</span>
                         <h3 class="text-lg font-bold text-secondary mt-1">Team Contributions</h3>
@@ -256,7 +289,7 @@
                 </div>
                 <!-- Milestone 3 -->
                 <div class="ml-8 relative">
-                    <div class="absolute -left-10 mt-1.5 w-4 h-4 rounded-full bg-primary ring-4 ring-blue-50"></div>
+                    <div class="absolute -left-10 mt-1.5 w-4 h-4 rounded-full bg-primary ring-4 ring-yellow-100"></div>
                     <div class="bg-gray-50 p-6 rounded-xl border border-gray-100 shadow-sm">
                         <span class="text-primary font-bold text-sm">สัปดาห์สุดท้าย</span>
                         <h3 class="text-lg font-bold text-secondary mt-1">Legacy Archives</h3>
@@ -297,7 +330,7 @@
                         <div class="bg-gray-200 aspect-square rounded-lg overflow-hidden card-hover">
                             <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=300&q=80" alt="Presentation" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-300">
                         </div>
-                        <div class="bg-blue-50 aspect-square rounded-lg overflow-hidden flex items-center justify-center border border-blue-100 card-hover cursor-pointer">
+                        <div class="bg-yellow-50 aspect-square rounded-lg overflow-hidden flex items-center justify-center border border-yellow-200 card-hover cursor-pointer">
                             <span class="text-primary font-medium text-sm">+ ดูรูปทั้งหมด</span>
                         </div>
                     </div>
@@ -320,7 +353,7 @@
                             </div>
                             <!-- Award 2 -->
                             <div class="flex items-center p-4 bg-gray-50 rounded-xl border border-gray-100 card-hover">
-                                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0 text-xl">
+                                <div class="w-12 h-12 bg-yellow-100 text-yellow-700 rounded-full flex items-center justify-center flex-shrink-0 text-xl">
                                     <i class="fa-solid fa-medal"></i>
                                 </div>
                                 <div class="ml-4">
@@ -330,7 +363,7 @@
                             </div>
                             <!-- Award 3 -->
                             <div class="flex items-center p-4 bg-gray-50 rounded-xl border border-gray-100 card-hover">
-                                <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center flex-shrink-0 text-xl">
+                                <div class="w-12 h-12 bg-zinc-100 text-zinc-800 rounded-full flex items-center justify-center flex-shrink-0 text-xl">
                                     <i class="fa-solid fa-star"></i>
                                 </div>
                                 <div class="ml-4">
@@ -351,7 +384,12 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
             <div>
                 <div class="flex justify-center md:justify-start items-center mb-4">
-                    <i class="fa-solid fa-microchip text-primary text-2xl mr-2"></i>
+                    <span class="brand-mark text-3xl mr-2" aria-hidden="true">
+                        <svg viewBox="0 0 128 128" fill="currentColor" role="img">
+                            <path d="M79 18c-16 6-30 18-41 36H25L13 70l20-3-24 32 36-28-4 22 16-13V66c20-12 34-28 40-48H79Zm3 27a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"/>
+                            <path d="M30 38a44 44 0 0 1 40-19l-8 9a32 32 0 0 0-23 9 33 33 0 0 0-9 29l-10 8A44 44 0 0 1 30 38Zm61 26 9-9a44 44 0 0 1-45 54l9-10a33 33 0 0 0 27-35Z"/>
+                        </svg>
+                    </span>
                     <span class="font-bold text-xl">OPTIMIZER <span class="text-primary">SS6</span></span>
                 </div>
                 <p class="text-gray-400 text-sm">พื้นที่แห่งความทรงจำของเหล่านวัตกรและวิศวกร AI</p>
