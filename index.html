@@ -82,6 +82,9 @@
         .clip-frame {
             aspect-ratio: 16 / 9;
         }
+        .drive-gallery-mask {
+            overflow: hidden;
+        }
         .drive-gallery-frame {
             height: 26rem;
         }
@@ -419,17 +422,19 @@
                         </div>
                     </div>
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                        <iframe
-                            id="drive-gallery-frame"
-                            src="https://drive.google.com/embeddedfolderview?id=1JVGRIUVJxuPbl-p6hVnVWsGBuIdnkTWl#grid"
-                            title="SPAI SS6 Gallery"
-                            class="drive-gallery-frame w-full border-0"
-                            loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <div class="drive-gallery-mask">
+                            <iframe
+                                id="drive-gallery-frame"
+                                src="https://drive.google.com/embeddedfolderview?id=1JVGRIUVJxuPbl-p6hVnVWsGBuIdnkTWl#grid"
+                                title="รูปภาพกิจกรรม Optimizer SS6"
+                                class="drive-gallery-frame w-full border-0"
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
                         <div class="p-5 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                             <div>
-                                <p class="text-sm font-bold text-secondary">SPAI_SS6_Gallery</p>
-                                <p class="text-xs text-gray-500">รูปภาพจาก Google Drive ของกิจกรรม Optimizer SS6</p>
+                                <p class="text-sm font-bold text-secondary">รูปภาพกิจกรรม</p>
+                                <p class="text-xs text-gray-500">อัปเดตรูปจาก Google Drive โดยไม่แสดงชื่อไฟล์บนหน้าเว็บ</p>
                             </div>
                             <a href="https://drive.google.com/drive/folders/1JVGRIUVJxuPbl-p6hVnVWsGBuIdnkTWl?usp=drive_link" target="_blank" rel="noopener" class="inline-flex items-center text-sm text-primary hover:text-secondary font-medium transition">
                                 ดูรูปทั้งหมด <i class="fa-solid fa-arrow-up-right-from-square ml-2"></i>
