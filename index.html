@@ -10,40 +10,40 @@
     <style>
         :root,
         html[data-theme="optimizer"] {
-            --primary: #ffd60a;
-            --secondary: #111111;
-            --accent: #f59e0b;
-            --soft: #fffbeb;
+            --primary: #fde68a;
+            --secondary: #4a3f2a;
+            --accent: #f9c74f;
+            --soft: #fffaf0;
             --muted-surface: #fef3c7;
-            --primary-rgb: 255, 214, 10;
-            --accent-rgb: 245, 158, 11;
+            --primary-rgb: 253, 230, 138;
+            --accent-rgb: 249, 199, 79;
         }
         html[data-theme="sky"] {
-            --primary: #38bdf8;
-            --secondary: #082f49;
-            --accent: #0ea5e9;
-            --soft: #f0f9ff;
+            --primary: #bae6fd;
+            --secondary: #365168;
+            --accent: #7dd3fc;
+            --soft: #f3fbff;
             --muted-surface: #e0f2fe;
-            --primary-rgb: 56, 189, 248;
-            --accent-rgb: 14, 165, 233;
+            --primary-rgb: 186, 230, 253;
+            --accent-rgb: 125, 211, 252;
         }
         html[data-theme="emerald"] {
-            --primary: #34d399;
-            --secondary: #064e3b;
-            --accent: #10b981;
-            --soft: #ecfdf5;
+            --primary: #bbf7d0;
+            --secondary: #355e52;
+            --accent: #86efac;
+            --soft: #f2fff8;
             --muted-surface: #d1fae5;
-            --primary-rgb: 52, 211, 153;
-            --accent-rgb: 16, 185, 129;
+            --primary-rgb: 187, 247, 208;
+            --accent-rgb: 134, 239, 172;
         }
         html[data-theme="violet"] {
-            --primary: #c084fc;
-            --secondary: #3b0764;
-            --accent: #8b5cf6;
-            --soft: #faf5ff;
+            --primary: #ddd6fe;
+            --secondary: #514260;
+            --accent: #c4b5fd;
+            --soft: #fbf8ff;
             --muted-surface: #f3e8ff;
-            --primary-rgb: 192, 132, 252;
-            --accent-rgb: 139, 92, 246;
+            --primary-rgb: 221, 214, 254;
+            --accent-rgb: 196, 181, 253;
         }
         body { font-family: 'Prompt', sans-serif; }
         .blueprint-bg {
@@ -70,8 +70,8 @@
             display: block;
         }
         .hero-logo {
-            background: radial-gradient(circle at 50% 42%, #1f1f1f 0%, #060606 68%);
-            box-shadow: 0 18px 45px rgba(17, 17, 17, 0.25), inset 0 0 0 1px rgba(var(--primary-rgb), 0.2);
+            background: radial-gradient(circle at 50% 42%, rgba(74, 63, 42, 0.94) 0%, rgba(38, 35, 31, 0.98) 68%);
+            box-shadow: 0 18px 45px rgba(var(--accent-rgb), 0.18), inset 0 0 0 1px rgba(var(--primary-rgb), 0.4);
         }
         .member-card {
             min-height: 330px;
@@ -82,15 +82,18 @@
         .clip-frame {
             aspect-ratio: 16 / 9;
         }
-        .drive-gallery-mask {
-            overflow: hidden;
+        .drive-photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+            gap: 1rem;
         }
-        .drive-gallery-frame {
-            height: 26rem;
+        .drive-photo-card {
+            aspect-ratio: 4 / 3;
+            background: var(--muted-surface);
         }
         @media (max-width: 640px) {
-            .drive-gallery-frame {
-                height: 22rem;
+            .drive-photo-grid {
+                grid-template-columns: 1fr;
             }
         }
         .theme-heading-gradient {
@@ -183,16 +186,16 @@
                 </div>
                 <div class="hidden md:flex items-center gap-3" aria-label="Theme colors">
                     <button type="button" class="theme-option p-1 rounded-full" data-theme-option="optimizer" aria-label="Optimizer yellow theme">
-                        <span class="theme-swatch block" style="background: linear-gradient(135deg, #ffd60a 0 55%, #111111 55% 100%);"></span>
+                        <span class="theme-swatch block" style="background: linear-gradient(135deg, #fde68a 0 55%, #4a3f2a 55% 100%);"></span>
                     </button>
                     <button type="button" class="theme-option p-1 rounded-full" data-theme-option="sky" aria-label="Sky blue theme">
-                        <span class="theme-swatch block" style="background: linear-gradient(135deg, #38bdf8 0 55%, #082f49 55% 100%);"></span>
+                        <span class="theme-swatch block" style="background: linear-gradient(135deg, #bae6fd 0 55%, #365168 55% 100%);"></span>
                     </button>
                     <button type="button" class="theme-option p-1 rounded-full" data-theme-option="emerald" aria-label="Emerald green theme">
-                        <span class="theme-swatch block" style="background: linear-gradient(135deg, #34d399 0 55%, #064e3b 55% 100%);"></span>
+                        <span class="theme-swatch block" style="background: linear-gradient(135deg, #bbf7d0 0 55%, #355e52 55% 100%);"></span>
                     </button>
                     <button type="button" class="theme-option p-1 rounded-full" data-theme-option="violet" aria-label="Violet theme">
-                        <span class="theme-swatch block" style="background: linear-gradient(135deg, #c084fc 0 55%, #3b0764 55% 100%);"></span>
+                        <span class="theme-swatch block" style="background: linear-gradient(135deg, #ddd6fe 0 55%, #514260 55% 100%);"></span>
                     </button>
                 </div>
                 <div class="md:hidden flex items-center">
@@ -214,16 +217,16 @@
                 <a href="#recognition" class="block px-3 py-2 text-gray-600 hover:text-primary font-medium">หอเกียรติยศ</a>
                 <div class="flex items-center gap-3 px-3 py-3" aria-label="Theme colors">
                     <button type="button" class="theme-option p-1 rounded-full" data-theme-option="optimizer" aria-label="Optimizer yellow theme">
-                        <span class="theme-swatch block" style="background: linear-gradient(135deg, #ffd60a 0 55%, #111111 55% 100%);"></span>
+                        <span class="theme-swatch block" style="background: linear-gradient(135deg, #fde68a 0 55%, #4a3f2a 55% 100%);"></span>
                     </button>
                     <button type="button" class="theme-option p-1 rounded-full" data-theme-option="sky" aria-label="Sky blue theme">
-                        <span class="theme-swatch block" style="background: linear-gradient(135deg, #38bdf8 0 55%, #082f49 55% 100%);"></span>
+                        <span class="theme-swatch block" style="background: linear-gradient(135deg, #bae6fd 0 55%, #365168 55% 100%);"></span>
                     </button>
                     <button type="button" class="theme-option p-1 rounded-full" data-theme-option="emerald" aria-label="Emerald green theme">
-                        <span class="theme-swatch block" style="background: linear-gradient(135deg, #34d399 0 55%, #064e3b 55% 100%);"></span>
+                        <span class="theme-swatch block" style="background: linear-gradient(135deg, #bbf7d0 0 55%, #355e52 55% 100%);"></span>
                     </button>
                     <button type="button" class="theme-option p-1 rounded-full" data-theme-option="violet" aria-label="Violet theme">
-                        <span class="theme-swatch block" style="background: linear-gradient(135deg, #c084fc 0 55%, #3b0764 55% 100%);"></span>
+                        <span class="theme-swatch block" style="background: linear-gradient(135deg, #ddd6fe 0 55%, #514260 55% 100%);"></span>
                     </button>
                 </div>
             </div>
@@ -315,12 +318,12 @@
     </section>
 
     <!-- House Committee -->
-    <section id="committee" class="py-20 bg-secondary text-white overflow-hidden scroll-mt-16">
+    <section id="committee" class="py-20 blueprint-bg text-secondary overflow-hidden scroll-mt-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-14">
                 <p class="text-primary font-bold tracking-wide uppercase text-sm mb-3">Optimizer Season 6</p>
                 <h2 class="text-3xl md:text-4xl font-bold mb-4">กรรมการประจำบ้าน</h2>
-                <p class="text-gray-300 max-w-3xl mx-auto text-base sm:text-lg leading-relaxed break-words">ทีมที่ปรึกษาและกรรมการผู้ดูแลบ้าน Optimizer ตลอดการเดินทางของ Super AI Engineer Season 6</p>
+                <p class="text-gray-600 max-w-3xl mx-auto text-base sm:text-lg leading-relaxed break-words">ทีมที่ปรึกษาและกรรมการผู้ดูแลบ้าน Optimizer ตลอดการเดินทางของ Super AI Engineer Season 6</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
@@ -516,19 +519,13 @@
                         </div>
                     </div>
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                        <div class="drive-gallery-mask">
-                            <iframe
-                                id="drive-gallery-frame"
-                                src="https://drive.google.com/embeddedfolderview?id=1JVGRIUVJxuPbl-p6hVnVWsGBuIdnkTWl#grid"
-                                title="รูปภาพกิจกรรม Optimizer SS6"
-                                class="drive-gallery-frame w-full border-0"
-                                loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <div id="drive-photo-grid" class="drive-photo-grid p-5" aria-label="รูปภาพกิจกรรม Optimizer SS6">
+                            <div class="drive-photo-card rounded-lg overflow-hidden animate-pulse"></div>
                         </div>
                         <div class="p-5 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                             <div>
                                 <p class="text-sm font-bold text-secondary">รูปภาพกิจกรรม</p>
-                                <p class="text-xs text-gray-500">อัปเดตรูปจาก Google Drive โดยไม่แสดงชื่อไฟล์บนหน้าเว็บ</p>
+                                <p class="text-xs text-gray-500">แสดงรูปจาก Google Drive โดยไม่แสดงชื่อไฟล์ใต้รูป</p>
                             </div>
                             <a href="https://drive.google.com/drive/folders/1JVGRIUVJxuPbl-p6hVnVWsGBuIdnkTWl?usp=drive_link" target="_blank" rel="noopener" class="inline-flex items-center text-sm text-primary hover:text-secondary font-medium transition">
                                 ดูรูปทั้งหมด <i class="fa-solid fa-arrow-up-right-from-square ml-2"></i>
@@ -612,10 +609,18 @@
         const SHEET_ID = '1RcLKNSw49T5nktRj0YyOLTf3PyrHJXI35yVGJtTuaJ0';
         const SHEET_GID = '0';
         const SHEET_REFRESH_MS = 30000;
-        const DRIVE_GALLERY_BASE_URL = 'https://drive.google.com/embeddedfolderview?id=1JVGRIUVJxuPbl-p6hVnVWsGBuIdnkTWl';
+        const DRIVE_EMBEDDED_URL = 'https://drive.google.com/embeddedfolderview?id=1JVGRIUVJxuPbl-p6hVnVWsGBuIdnkTWl#grid';
+        const DRIVE_PROXY_URL = `https://api.allorigins.win/raw?url=${encodeURIComponent(DRIVE_EMBEDDED_URL)}`;
+        const fallbackDriveGalleryItems = [
+            { id: '1WY6CiyJhyQqILx2WqwkU2Z0EYS64z4UY' },
+            { id: '1gnHtXPIWe_tgsnsuIOFEC8nr6P5pXxBK' },
+        ];
 
         let sourceDataLoading = false;
+        let driveGalleryLoading = false;
+        let driveGalleryItems = fallbackDriveGalleryItems;
         let lastSheetSignature = '';
+        let lastDriveGallerySignature = '';
         let optimizerMembers = [
             { code: '606179', nickTh: 'พจน์', nickEn: '', firstName: 'ธีรพจน์', lastName: 'แซ่ลิน', instagram: 'Pojii', motto: 'งานเยอะ ค่อยๆทำ เดี๋ยวก็เสร็จ', interests: 'Recommender System', video: '' },
             { code: '', nickTh: 'สิทธ์', nickEn: '', firstName: 'สิทธ์', lastName: '', instagram: 'chitcid', motto: '', interests: '', video: '' },
@@ -811,10 +816,48 @@
             }
         };
 
-        const refreshDriveGallery = () => {
-            const frame = document.getElementById('drive-gallery-frame');
-            if (!frame) return;
-            frame.src = `${DRIVE_GALLERY_BASE_URL}&cacheBust=${Date.now()}#grid`;
+        const renderDriveGallery = () => {
+            const grid = document.getElementById('drive-photo-grid');
+            if (!grid) return;
+
+            grid.innerHTML = driveGalleryItems.map((item, index) => `
+                <a href="https://drive.google.com/file/d/${escapeHtml(item.id)}/view?usp=drive_web" target="_blank" rel="noopener" class="drive-photo-card card-hover block rounded-lg overflow-hidden border border-gray-100 shadow-sm">
+                    <img src="https://drive.google.com/thumbnail?id=${escapeHtml(item.id)}&sz=w900&cacheBust=${Date.now()}" alt="รูปภาพกิจกรรม Optimizer SS6 ${index + 1}" class="w-full h-full object-cover" loading="lazy">
+                </a>
+            `).join('');
+        };
+
+        const loadDriveGalleryData = async () => {
+            const response = await fetch(`${DRIVE_PROXY_URL}&cacheBust=${Date.now()}`);
+            if (!response.ok) throw new Error('Drive gallery request failed');
+
+            const html = await response.text();
+            const documentFragment = new DOMParser().parseFromString(html, 'text/html');
+            return [...documentFragment.querySelectorAll('.flip-entry[id^="entry-"]')]
+                .map((entry) => ({ id: entry.id.replace(/^entry-/, '') }))
+                .filter((item) => /^[A-Za-z0-9_-]+$/.test(item.id));
+        };
+
+        const refreshDriveGallery = async () => {
+            if (driveGalleryLoading) return;
+            driveGalleryLoading = true;
+
+            try {
+                const freshItems = await loadDriveGalleryData();
+                if (!freshItems.length) return;
+
+                const signature = JSON.stringify(freshItems);
+                if (signature === lastDriveGallerySignature) return;
+
+                lastDriveGallerySignature = signature;
+                driveGalleryItems = freshItems;
+                renderDriveGallery();
+            } catch (error) {
+                console.warn('Unable to refresh Drive gallery. Using the last available images.', error);
+                renderDriveGallery();
+            } finally {
+                driveGalleryLoading = false;
+            }
         };
 
         const getVideoMeta = (url) => {
@@ -953,7 +996,9 @@
 
         renderMemberCards();
         renderClipCards();
+        renderDriveGallery();
         refreshSourceData();
+        refreshDriveGallery();
         window.setInterval(refreshSourceData, SHEET_REFRESH_MS);
         window.setInterval(refreshDriveGallery, SHEET_REFRESH_MS);
         window.addEventListener('focus', () => {
