@@ -76,6 +76,12 @@
         .member-card {
             min-height: 330px;
         }
+        .clip-card {
+            min-height: 100%;
+        }
+        .clip-frame {
+            aspect-ratio: 16 / 9;
+        }
         .theme-heading-gradient {
             background-image: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
         }
@@ -159,6 +165,7 @@
                     <a href="#home" class="text-gray-600 hover:text-primary font-medium transition">หน้าแรก</a>
                     <a href="#about" class="text-gray-600 hover:text-primary font-medium transition">เกี่ยวกับเรา</a>
                     <a href="#members" class="text-gray-600 hover:text-primary font-medium transition">สมุดพกนักพัฒนา</a>
+                    <a href="#clips" class="text-gray-600 hover:text-primary font-medium transition">Clips</a>
                     <a href="#gallery" class="text-gray-600 hover:text-primary font-medium transition">แกลเลอรี่</a>
                     <a href="#recognition" class="text-gray-600 hover:text-primary font-medium transition">หอเกียรติยศ</a>
                 </div>
@@ -189,6 +196,7 @@
                 <a href="#home" class="block px-3 py-2 text-gray-600 hover:text-primary font-medium">หน้าแรก</a>
                 <a href="#about" class="block px-3 py-2 text-gray-600 hover:text-primary font-medium">เกี่ยวกับเรา</a>
                 <a href="#members" class="block px-3 py-2 text-gray-600 hover:text-primary font-medium">สมุดพกนักพัฒนา</a>
+                <a href="#clips" class="block px-3 py-2 text-gray-600 hover:text-primary font-medium">Clips</a>
                 <a href="#gallery" class="block px-3 py-2 text-gray-600 hover:text-primary font-medium">แกลเลอรี่</a>
                 <a href="#recognition" class="block px-3 py-2 text-gray-600 hover:text-primary font-medium">หอเกียรติยศ</a>
                 <div class="flex items-center gap-3 px-3 py-3" aria-label="Theme colors">
@@ -318,6 +326,24 @@
 
             <div id="member-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             </div>
+        </div>
+    </section>
+
+    <!-- Clips Section -->
+    <section id="clips" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-secondary mb-4">Clips ผลงาน Social Media</h2>
+                    <p class="text-gray-500 max-w-2xl text-lg">รวมคลิปจากคอลัมน์ “ลิงค์วิดีโอผลงาน social media” พร้อมรายละเอียดเจ้าของผลงานและความสนใจด้าน AI</p>
+                </div>
+                <div class="bg-gray-50 border theme-surface-outline rounded-xl px-5 py-4 shadow-sm">
+                    <p class="text-sm text-gray-500">คลิปทั้งหมด</p>
+                    <p class="text-3xl font-bold text-secondary"><span id="clip-count">0</span> รายการ</p>
+                </div>
+            </div>
+
+            <div id="clip-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-8"></div>
         </div>
     </section>
 
@@ -497,6 +523,54 @@
             { code: '', nickTh: 'TA - หมิวหมิว', nickEn: '', firstName: 'บุญฐิตา', lastName: 'พรรณกุล', instagram: 'm_miewmiew_', motto: '', interests: '', video: '' },
         ];
 
+        const optimizerClips = [
+            {
+                nickTh: 'ปอ',
+                nickEn: 'Por',
+                firstName: 'รุจิวัฒน์',
+                lastName: 'พิทักษ์ศิริพรรณ',
+                motto: 'Hope for the best, prepare for the worst',
+                interests: 'Agentic AI, Automation, Knowledge retrieval',
+                url: 'https://youtu.be/nWlH2smp5Kg',
+            },
+            {
+                nickTh: 'เนเน่',
+                nickEn: 'Nene',
+                firstName: 'พัชริดา',
+                lastName: 'ปล้องพันธ์',
+                motto: 'Positive thinking fuels positive action.',
+                interests: 'Agentic AI',
+                url: 'https://www.tiktok.com/@itneneeeeeeeeee?lang=th-TH',
+            },
+            {
+                nickTh: 'ฮิวโก้',
+                nickEn: 'Hugo',
+                firstName: 'สหรัถ',
+                lastName: 'ยอดไพสง',
+                motto: 'ผมคืนลูกสาวให้แม่แล้ว แต่แม่ผมถามเมื่อไหร่จะได้ลูกชายแม่คืน',
+                interests: 'RAG, Image processing, Computer Vision',
+                url: 'https://www.tiktok.com/@bebnybunyboo/video/7623462913851919623?lang=en',
+            },
+            {
+                nickTh: 'จิม',
+                nickEn: 'Jim',
+                firstName: 'ศุถณัฐ',
+                lastName: 'ธีรรักษ์ตระกูล',
+                motto: 'ถ้าคนจริง โอวัลตินต้องละลาย',
+                interests: 'RAG',
+                url: 'https://www.youtube.com/watch?v=KGhIyHDKHCk&feature=youtu.be',
+            },
+            {
+                nickTh: 'ฟลุค',
+                nickEn: 'fluke',
+                firstName: 'เตชินท์',
+                lastName: 'กิตติไกรศักดิ์',
+                motto: 'ค่อยทำเดี๋ยวก็เสร็จ',
+                interests: 'Machine learning, Financal',
+                url: 'https://youtube.com/shorts/FTmJans0Xs0?feature=share',
+            },
+        ];
+
         const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({
             '&': '&amp;',
             '<': '&lt;',
@@ -516,6 +590,32 @@
         };
 
         const validUrl = (url) => /^https?:\/\//.test(String(url ?? '').trim());
+
+        const getVideoMeta = (url) => {
+            const value = String(url ?? '').trim();
+            const youtubeMatch = value.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/))([^?&/]+)/);
+            if (youtubeMatch) {
+                return {
+                    platform: value.includes('/shorts/') ? 'YouTube Shorts' : 'YouTube',
+                    thumbnailUrl: `https://i.ytimg.com/vi/${youtubeMatch[1]}/hqdefault.jpg`,
+                    icon: 'fa-brands fa-youtube',
+                };
+            }
+
+            if (value.includes('tiktok.com')) {
+                return {
+                    platform: value.includes('/video/') ? 'TikTok Video' : 'TikTok Profile',
+                    thumbnailUrl: '',
+                    icon: 'fa-brands fa-tiktok',
+                };
+            }
+
+            return {
+                platform: 'Social Media',
+                thumbnailUrl: '',
+                icon: 'fa-solid fa-link',
+            };
+        };
 
         const renderMemberCards = () => {
             const grid = document.getElementById('member-grid');
@@ -566,7 +666,65 @@
             }).join('');
         };
 
+        const renderClipCards = () => {
+            const grid = document.getElementById('clip-grid');
+            const count = document.getElementById('clip-count');
+            if (!grid) return;
+
+            if (count) count.textContent = optimizerClips.length;
+
+            grid.innerHTML = optimizerClips.map((clip) => {
+                const displayName = [clip.firstName, clip.lastName].filter(Boolean).join(' ');
+                const nickname = [clip.nickTh, clip.nickEn].filter(Boolean).join(' / ');
+                const interests = splitInterests(clip.interests);
+                const video = getVideoMeta(clip.url);
+                const interestTags = interests.length
+                    ? interests.map((interest) => `<span class="tag theme-soft-icon px-2 py-1 rounded-md">${escapeHtml(interest)}</span>`).join('')
+                    : '<span class="tag bg-gray-100 text-gray-500 px-2 py-1 rounded-md">กำลังเติมข้อมูล</span>';
+                const media = video.thumbnailUrl
+                    ? `<a href="${escapeHtml(clip.url)}" target="_blank" rel="noopener" class="group relative block w-full h-full">
+                            <img src="${escapeHtml(video.thumbnailUrl)}" alt="${escapeHtml(displayName)} clip preview" class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
+                            <span class="absolute inset-0 bg-black/35 flex items-center justify-center">
+                                <span class="w-16 h-16 rounded-full bg-white/95 text-secondary flex items-center justify-center shadow-lg transition group-hover:scale-105">
+                                    <i class="fa-solid fa-play text-2xl ml-1"></i>
+                                </span>
+                            </span>
+                       </a>`
+                    : `<div class="w-full h-full theme-member-top flex flex-col items-center justify-center text-center px-6">
+                            <i class="${video.icon} text-5xl text-white mb-4"></i>
+                            <p class="text-white font-bold text-xl">${escapeHtml(video.platform)}</p>
+                            <p class="text-white/80 text-sm mt-2">แพลตฟอร์มนี้เปิดดูจากลิงก์ต้นทางได้ดีที่สุด</p>
+                       </div>`;
+
+                return `
+                    <article class="clip-card card-hover bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="clip-frame bg-secondary overflow-hidden">
+                            ${media}
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-start justify-between gap-4 mb-4">
+                                <div>
+                                    <p class="text-xs font-bold text-primary mb-1"><i class="${video.icon} mr-1"></i>${escapeHtml(video.platform)}</p>
+                                    <h3 class="text-xl font-bold text-secondary leading-snug">${escapeHtml(displayName || nickname || 'Optimizer Clip')}</h3>
+                                    <p class="text-sm text-gray-500">${escapeHtml(nickname || 'สมาชิกบ้าน Optimizer')}</p>
+                                </div>
+                                <a href="${escapeHtml(clip.url)}" target="_blank" rel="noopener" class="theme-primary-action inline-flex items-center flex-shrink-0 text-xs px-3 py-2 rounded-full font-medium transition">
+                                    <i class="fa-solid fa-up-right-from-square mr-1"></i>เปิดคลิป
+                                </a>
+                            </div>
+                            <p class="text-sm text-gray-500 italic mb-4">"${escapeHtml(clip.motto || 'พร้อมแชร์ผลงานและการเรียนรู้ของทีม')}"</p>
+                            <div>
+                                <p class="text-xs text-gray-500 mb-2 font-medium">รายละเอียด / ความสนใจด้าน AI:</p>
+                                <div class="flex flex-wrap gap-1">${interestTags}</div>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        };
+
         renderMemberCards();
+        renderClipCards();
 
         const applyTheme = (theme) => {
             const selectedTheme = theme || 'optimizer';
