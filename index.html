@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Optimizer SS6 - Super AI Engineer</title>
+    <link rel="icon" type="image/png" href="assets/logo.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -64,10 +65,20 @@
             color: var(--primary);
             filter: drop-shadow(0 5px 10px rgba(var(--primary-rgb), 0.25));
         }
-        .brand-mark svg {
-            width: 1em;
-            height: 1em;
+        .brand-mark img {
             display: block;
+            object-fit: cover;
+        }
+        .nav-logo-img {
+            width: 3rem;
+            height: 2rem;
+            border-radius: 0.5rem;
+        }
+        .hero-logo-img {
+            width: min(76vw, 22rem);
+            max-height: 14.75rem;
+            border-radius: 0.875rem;
+            object-fit: cover;
         }
         .hero-logo {
             background: radial-gradient(circle at 50% 42%, #1f1f1f 0%, #060606 68%);
@@ -167,11 +178,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
-                    <span class="brand-mark text-3xl mr-2" aria-hidden="true">
-                        <svg viewBox="0 0 128 128" fill="currentColor" role="img">
-                            <path d="M79 18c-16 6-30 18-41 36H25L13 70l20-3-24 32 36-28-4 22 16-13V66c20-12 34-28 40-48H79Zm3 27a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"/>
-                            <path d="M30 38a44 44 0 0 1 40-19l-8 9a32 32 0 0 0-23 9 33 33 0 0 0-9 29l-10 8A44 44 0 0 1 30 38Zm61 26 9-9a44 44 0 0 1-45 54l9-10a33 33 0 0 0 27-35Z"/>
-                        </svg>
+                    <span class="brand-mark mr-3" aria-hidden="true">
+                        <img src="assets/logo.png" alt="" class="nav-logo-img">
                     </span>
                     <span class="font-bold text-xl text-secondary">OPTIMIZER <span class="text-primary">SS6</span></span>
                 </div>
@@ -237,12 +245,9 @@
     <section id="home" class="pt-24 pb-20 md:pt-32 md:pb-28 blueprint-bg relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center max-w-3xl mx-auto">
-                <div class="inline-flex hero-logo rounded-2xl p-5 mb-6 border theme-surface-outline">
-                    <span class="brand-mark text-7xl" aria-label="Optimizer rocket logo">
-                        <svg viewBox="0 0 128 128" fill="currentColor" role="img">
-                            <path d="M79 18c-16 6-30 18-41 36H25L13 70l20-3-24 32 36-28-4 22 16-13V66c20-12 34-28 40-48H79Zm3 27a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"/>
-                            <path d="M30 38a44 44 0 0 1 40-19l-8 9a32 32 0 0 0-23 9 33 33 0 0 0-9 29l-10 8A44 44 0 0 1 30 38Zm61 26 9-9a44 44 0 0 1-45 54l9-10a33 33 0 0 0 27-35Z"/>
-                        </svg>
+                <div class="inline-flex hero-logo rounded-2xl p-2 mb-6 border theme-surface-outline">
+                    <span class="brand-mark" aria-label="Optimizer logo">
+                        <img src="assets/logo.png" alt="Optimizer logo" class="hero-logo-img">
                     </span>
                 </div>
                 <h1 class="text-4xl md:text-6xl font-bold text-secondary mb-4 leading-tight">
@@ -288,10 +293,7 @@
                 <div class="card-hover bg-gray-50 rounded-2xl p-8 text-center border border-gray-100">
                     <div class="w-20 h-20 mx-auto bg-secondary text-primary rounded-full flex items-center justify-center mb-6">
                         <span class="brand-mark text-4xl" aria-hidden="true">
-                            <svg viewBox="0 0 128 128" fill="currentColor" role="img">
-                                <path d="M79 18c-16 6-30 18-41 36H25L13 70l20-3-24 32 36-28-4 22 16-13V66c20-12 34-28 40-48H79Zm3 27a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"/>
-                                <path d="M30 38a44 44 0 0 1 40-19l-8 9a32 32 0 0 0-23 9 33 33 0 0 0-9 29l-10 8A44 44 0 0 1 30 38Zm61 26 9-9a44 44 0 0 1-45 54l9-10a33 33 0 0 0 27-35Z"/>
-                            </svg>
+                            <img src="assets/logo.png" alt="" class="w-14 h-14 rounded-full">
                         </span>
                     </div>
                     <h3 class="text-xl font-bold mb-2">สัญลักษณ์บ้าน</h3>
@@ -582,11 +584,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
             <div>
                 <div class="flex justify-center md:justify-start items-center mb-4">
-                    <span class="brand-mark text-3xl mr-2" aria-hidden="true">
-                        <svg viewBox="0 0 128 128" fill="currentColor" role="img">
-                            <path d="M79 18c-16 6-30 18-41 36H25L13 70l20-3-24 32 36-28-4 22 16-13V66c20-12 34-28 40-48H79Zm3 27a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"/>
-                            <path d="M30 38a44 44 0 0 1 40-19l-8 9a32 32 0 0 0-23 9 33 33 0 0 0-9 29l-10 8A44 44 0 0 1 30 38Zm61 26 9-9a44 44 0 0 1-45 54l9-10a33 33 0 0 0 27-35Z"/>
-                        </svg>
+                    <span class="brand-mark mr-3" aria-hidden="true">
+                        <img src="assets/logo.png" alt="" class="nav-logo-img">
                     </span>
                     <span class="font-bold text-xl">OPTIMIZER <span class="text-primary">SS6</span></span>
                 </div>
