@@ -420,6 +420,7 @@
                     </div>
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                         <iframe
+                            id="drive-gallery-frame"
                             src="https://drive.google.com/embeddedfolderview?id=1JVGRIUVJxuPbl-p6hVnVWsGBuIdnkTWl#grid"
                             title="SPAI SS6 Gallery"
                             class="drive-gallery-frame w-full border-0"
@@ -509,7 +510,14 @@
 
     <!-- Script for member cards -->
     <script>
-        const optimizerMembers = [
+        const SHEET_ID = '1RcLKNSw49T5nktRj0YyOLTf3PyrHJXI35yVGJtTuaJ0';
+        const SHEET_GID = '0';
+        const SHEET_REFRESH_MS = 30000;
+        const DRIVE_GALLERY_BASE_URL = 'https://drive.google.com/embeddedfolderview?id=1JVGRIUVJxuPbl-p6hVnVWsGBuIdnkTWl';
+
+        let sourceDataLoading = false;
+        let lastSheetSignature = '';
+        let optimizerMembers = [
             { code: '606179', nickTh: 'พจน์', nickEn: '', firstName: 'ธีรพจน์', lastName: 'แซ่ลิน', instagram: 'Pojii', motto: 'งานเยอะ ค่อยๆทำ เดี๋ยวก็เสร็จ', interests: 'Recommender System', video: '' },
             { code: '', nickTh: 'สิทธ์', nickEn: '', firstName: 'สิทธ์', lastName: '', instagram: 'chitcid', motto: '', interests: '', video: '' },
             { code: '', nickTh: 'หลวง', nickEn: '', firstName: 'ภัทรบดี', lastName: '', instagram: '-', motto: '', interests: '', video: '' },
@@ -537,7 +545,7 @@
             { code: '', nickTh: 'TA - หมิวหมิว', nickEn: '', firstName: 'บุญฐิตา', lastName: 'พรรณกุล', instagram: 'm_miewmiew_', motto: '', interests: '', video: '' },
         ];
 
-        const optimizerClips = [
+        let optimizerClips = [
             {
                 nickTh: 'ปอ',
                 nickEn: 'Por',
@@ -546,6 +554,7 @@
                 motto: 'Hope for the best, prepare for the worst',
                 interests: 'Agentic AI, Automation, Knowledge retrieval',
                 url: 'https://youtu.be/nWlH2smp5Kg',
+                title: 'FahMai RAG Challenge',
             },
             {
                 nickTh: 'เนเน่',
@@ -555,6 +564,7 @@
                 motto: 'Positive thinking fuels positive action.',
                 interests: 'Agentic AI',
                 url: 'https://www.tiktok.com/@itneneeeeeeeeee?lang=th-TH',
+                title: 'Positive action',
             },
             {
                 nickTh: 'ฮิวโก้',
@@ -564,6 +574,7 @@
                 motto: 'ผมคืนลูกสาวให้แม่แล้ว แต่แม่ผมถามเมื่อไหร่จะได้ลูกชายแม่คืน',
                 interests: 'RAG, Image processing, Computer Vision',
                 url: 'https://www.tiktok.com/@bebnybunyboo/video/7623462913851919623?lang=en',
+                title: 'Social media clip',
             },
             {
                 nickTh: 'จิม',
@@ -573,6 +584,7 @@
                 motto: 'ถ้าคนจริง โอวัลตินต้องละลาย',
                 interests: 'RAG',
                 url: 'https://www.youtube.com/watch?v=KGhIyHDKHCk&feature=youtu.be',
+                title: 'Generative Pipeline',
             },
             {
                 nickTh: 'ฟลุค',
@@ -582,6 +594,7 @@
                 motto: 'ค่อยทำเดี๋ยวก็เสร็จ',
                 interests: 'Machine learning, Financal',
                 url: 'https://youtube.com/shorts/FTmJans0Xs0?feature=share',
+                title: 'YouTube Shorts',
             },
         ];
 
@@ -604,6 +617,106 @@
         };
 
         const validUrl = (url) => /^https?:\/\//.test(String(url ?? '').trim());
+
+        const cellValue = (cell) => String(cell?.f ?? cell?.v ?? '').trim();
+
+        const sheetRowsToMembers = (response) => {
+            const rows = response?.table?.rows ?? [];
+            return rows.map((row) => {
+                const cells = row.c ?? [];
+                return {
+                    code: cellValue(cells[0]),
+                    nickTh: cellValue(cells[1]),
+                    nickEn: cellValue(cells[2]),
+                    firstName: cellValue(cells[3]),
+                    lastName: cellValue(cells[4]),
+                    instagram: cellValue(cells[5]),
+                    motto: cellValue(cells[8]),
+                    interests: cellValue(cells[9]),
+                    video: cellValue(cells[10]),
+                    videoTitle: cellValue(cells[11]),
+                };
+            }).filter((member) => [
+                member.code,
+                member.nickTh,
+                member.nickEn,
+                member.firstName,
+                member.lastName,
+                member.instagram,
+                member.motto,
+                member.interests,
+                member.video,
+            ].some(Boolean));
+        };
+
+        const membersToClips = (members) => members
+            .filter((member) => validUrl(member.video))
+            .map((member) => ({
+                nickTh: member.nickTh,
+                nickEn: member.nickEn,
+                firstName: member.firstName,
+                lastName: member.lastName,
+                motto: member.motto,
+                interests: member.interests,
+                url: member.video,
+                title: member.videoTitle,
+            }));
+
+        const loadSheetData = () => new Promise((resolve, reject) => {
+            const callbackName = `optimizerSheet_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+            const script = document.createElement('script');
+            const cleanup = () => {
+                delete window[callbackName];
+                script.remove();
+            };
+            const timeout = window.setTimeout(() => {
+                cleanup();
+                reject(new Error('Sheet request timed out'));
+            }, 12000);
+
+            window[callbackName] = (response) => {
+                window.clearTimeout(timeout);
+                cleanup();
+                resolve(sheetRowsToMembers(response));
+            };
+
+            script.onerror = () => {
+                window.clearTimeout(timeout);
+                cleanup();
+                reject(new Error('Sheet request failed'));
+            };
+            script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${SHEET_GID}&tqx=out:json;responseHandler:${callbackName}&cacheBust=${Date.now()}`;
+            document.head.appendChild(script);
+        });
+
+        const refreshSourceData = async () => {
+            if (sourceDataLoading) return;
+            sourceDataLoading = true;
+
+            try {
+                const freshMembers = await loadSheetData();
+                if (!freshMembers.length) return;
+
+                const signature = JSON.stringify(freshMembers);
+                if (signature === lastSheetSignature) return;
+
+                lastSheetSignature = signature;
+                optimizerMembers = freshMembers;
+                optimizerClips = membersToClips(freshMembers);
+                renderMemberCards();
+                renderClipCards();
+            } catch (error) {
+                console.warn('Unable to refresh Google Sheet data. Using the last available data.', error);
+            } finally {
+                sourceDataLoading = false;
+            }
+        };
+
+        const refreshDriveGallery = () => {
+            const frame = document.getElementById('drive-gallery-frame');
+            if (!frame) return;
+            frame.src = `${DRIVE_GALLERY_BASE_URL}&cacheBust=${Date.now()}#grid`;
+        };
 
         const getVideoMeta = (url) => {
             const value = String(url ?? '').trim();
@@ -690,6 +803,7 @@
             grid.innerHTML = optimizerClips.map((clip) => {
                 const displayName = [clip.firstName, clip.lastName].filter(Boolean).join(' ');
                 const nickname = [clip.nickTh, clip.nickEn].filter(Boolean).join(' / ');
+                const clipTitle = String(clip.title ?? '').trim();
                 const interests = splitInterests(clip.interests);
                 const video = getVideoMeta(clip.url);
                 const interestTags = interests.length
@@ -721,6 +835,7 @@
                                     <p class="text-xs font-bold text-primary mb-1"><i class="${video.icon} mr-1"></i>${escapeHtml(video.platform)}</p>
                                     <h3 class="text-xl font-bold text-secondary leading-snug">${escapeHtml(displayName || nickname || 'Optimizer Clip')}</h3>
                                     <p class="text-sm text-gray-500">${escapeHtml(nickname || 'สมาชิกบ้าน Optimizer')}</p>
+                                    ${clipTitle ? `<p class="text-sm font-medium text-secondary mt-2">${escapeHtml(clipTitle)}</p>` : ''}
                                 </div>
                                 <a href="${escapeHtml(clip.url)}" target="_blank" rel="noopener" class="theme-primary-action inline-flex items-center flex-shrink-0 text-xs px-3 py-2 rounded-full font-medium transition">
                                     <i class="fa-solid fa-up-right-from-square mr-1"></i>เปิดคลิป
@@ -739,6 +854,19 @@
 
         renderMemberCards();
         renderClipCards();
+        refreshSourceData();
+        window.setInterval(refreshSourceData, SHEET_REFRESH_MS);
+        window.setInterval(refreshDriveGallery, SHEET_REFRESH_MS);
+        window.addEventListener('focus', () => {
+            refreshSourceData();
+            refreshDriveGallery();
+        });
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                refreshSourceData();
+                refreshDriveGallery();
+            }
+        });
 
         const applyTheme = (theme) => {
             const selectedTheme = theme || 'optimizer';
