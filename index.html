@@ -8,12 +8,49 @@
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root,
+        html[data-theme="optimizer"] {
+            --primary: #ffd60a;
+            --secondary: #111111;
+            --accent: #f59e0b;
+            --soft: #fffbeb;
+            --muted-surface: #fef3c7;
+            --primary-rgb: 255, 214, 10;
+            --accent-rgb: 245, 158, 11;
+        }
+        html[data-theme="sky"] {
+            --primary: #38bdf8;
+            --secondary: #082f49;
+            --accent: #0ea5e9;
+            --soft: #f0f9ff;
+            --muted-surface: #e0f2fe;
+            --primary-rgb: 56, 189, 248;
+            --accent-rgb: 14, 165, 233;
+        }
+        html[data-theme="emerald"] {
+            --primary: #34d399;
+            --secondary: #064e3b;
+            --accent: #10b981;
+            --soft: #ecfdf5;
+            --muted-surface: #d1fae5;
+            --primary-rgb: 52, 211, 153;
+            --accent-rgb: 16, 185, 129;
+        }
+        html[data-theme="violet"] {
+            --primary: #c084fc;
+            --secondary: #3b0764;
+            --accent: #8b5cf6;
+            --soft: #faf5ff;
+            --muted-surface: #f3e8ff;
+            --primary-rgb: 192, 132, 252;
+            --accent-rgb: 139, 92, 246;
+        }
         body { font-family: 'Prompt', sans-serif; }
         .blueprint-bg {
-            background-color: #fffbeb;
-            background-image: radial-gradient(circle at top, rgba(255, 214, 10, 0.18), transparent 32rem),
-            linear-gradient(rgba(245, 158, 11, 0.12) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(245, 158, 11, 0.12) 1px, transparent 1px);
+            background-color: var(--soft);
+            background-image: radial-gradient(circle at top, rgba(var(--primary-rgb), 0.18), transparent 32rem),
+            linear-gradient(rgba(var(--accent-rgb), 0.12) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(var(--accent-rgb), 0.12) 1px, transparent 1px);
             background-repeat: no-repeat, repeat, repeat;
             background-size: auto, 20px 20px, 20px 20px;
         }
@@ -24,8 +61,8 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            color: #ffd60a;
-            filter: drop-shadow(0 5px 10px rgba(255, 214, 10, 0.25));
+            color: var(--primary);
+            filter: drop-shadow(0 5px 10px rgba(var(--primary-rgb), 0.25));
         }
         .brand-mark svg {
             width: 1em;
@@ -34,7 +71,52 @@
         }
         .hero-logo {
             background: radial-gradient(circle at 50% 42%, #1f1f1f 0%, #060606 68%);
-            box-shadow: 0 18px 45px rgba(17, 17, 17, 0.25), inset 0 0 0 1px rgba(255, 214, 10, 0.2);
+            box-shadow: 0 18px 45px rgba(17, 17, 17, 0.25), inset 0 0 0 1px rgba(var(--primary-rgb), 0.2);
+        }
+        .member-card {
+            min-height: 330px;
+        }
+        .theme-heading-gradient {
+            background-image: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+        }
+        .theme-soft-icon {
+            background: rgba(var(--primary-rgb), 0.18);
+            color: var(--secondary);
+        }
+        .theme-surface-outline {
+            border-color: rgba(var(--primary-rgb), 0.3);
+        }
+        .theme-ring {
+            --tw-ring-color: rgba(var(--primary-rgb), 0.25);
+        }
+        .theme-member-top {
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+        }
+        .theme-primary-action {
+            background: var(--secondary);
+            color: var(--primary);
+        }
+        .theme-primary-action:hover {
+            filter: brightness(0.95);
+        }
+        .theme-secondary-action {
+            background: var(--primary);
+            color: var(--secondary);
+            border-color: rgba(var(--primary-rgb), 0.45);
+        }
+        .theme-secondary-action:hover {
+            background: var(--accent);
+        }
+        .theme-swatch {
+            width: 1.4rem;
+            height: 1.4rem;
+            border-radius: 999px;
+            border: 2px solid rgba(17, 17, 17, 0.12);
+            box-shadow: inset 0 0 0 3px rgba(255,255,255,0.75);
+        }
+        .theme-option[aria-pressed="true"] {
+            outline: 2px solid var(--secondary);
+            outline-offset: 3px;
         }
     </style>
     <script>
@@ -42,12 +124,19 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#ffd60a',
-                        secondary: '#111111',
-                        accent: '#f59e0b',
+                        primary: 'var(--primary)',
+                        secondary: 'var(--secondary)',
+                        accent: 'var(--accent)',
                     }
                 }
             }
+        }
+    </script>
+    <script>
+        try {
+            document.documentElement.dataset.theme = localStorage.getItem('optimizer-theme') || 'optimizer';
+        } catch (error) {
+            document.documentElement.dataset.theme = 'optimizer';
         }
     </script>
 </head>
@@ -73,6 +162,20 @@
                     <a href="#gallery" class="text-gray-600 hover:text-primary font-medium transition">แกลเลอรี่</a>
                     <a href="#recognition" class="text-gray-600 hover:text-primary font-medium transition">หอเกียรติยศ</a>
                 </div>
+                <div class="hidden md:flex items-center gap-3" aria-label="Theme colors">
+                    <button type="button" class="theme-option p-1 rounded-full" data-theme-option="optimizer" aria-label="Optimizer yellow theme">
+                        <span class="theme-swatch block" style="background: linear-gradient(135deg, #ffd60a 0 55%, #111111 55% 100%);"></span>
+                    </button>
+                    <button type="button" class="theme-option p-1 rounded-full" data-theme-option="sky" aria-label="Sky blue theme">
+                        <span class="theme-swatch block" style="background: linear-gradient(135deg, #38bdf8 0 55%, #082f49 55% 100%);"></span>
+                    </button>
+                    <button type="button" class="theme-option p-1 rounded-full" data-theme-option="emerald" aria-label="Emerald green theme">
+                        <span class="theme-swatch block" style="background: linear-gradient(135deg, #34d399 0 55%, #064e3b 55% 100%);"></span>
+                    </button>
+                    <button type="button" class="theme-option p-1 rounded-full" data-theme-option="violet" aria-label="Violet theme">
+                        <span class="theme-swatch block" style="background: linear-gradient(135deg, #c084fc 0 55%, #3b0764 55% 100%);"></span>
+                    </button>
+                </div>
                 <div class="md:hidden flex items-center">
                     <button id="mobile-menu-btn" class="text-gray-600 hover:text-primary focus:outline-none">
                         <i class="fa-solid fa-bars text-2xl"></i>
@@ -88,6 +191,20 @@
                 <a href="#members" class="block px-3 py-2 text-gray-600 hover:text-primary font-medium">สมุดพกนักพัฒนา</a>
                 <a href="#gallery" class="block px-3 py-2 text-gray-600 hover:text-primary font-medium">แกลเลอรี่</a>
                 <a href="#recognition" class="block px-3 py-2 text-gray-600 hover:text-primary font-medium">หอเกียรติยศ</a>
+                <div class="flex items-center gap-3 px-3 py-3" aria-label="Theme colors">
+                    <button type="button" class="theme-option p-1 rounded-full" data-theme-option="optimizer" aria-label="Optimizer yellow theme">
+                        <span class="theme-swatch block" style="background: linear-gradient(135deg, #ffd60a 0 55%, #111111 55% 100%);"></span>
+                    </button>
+                    <button type="button" class="theme-option p-1 rounded-full" data-theme-option="sky" aria-label="Sky blue theme">
+                        <span class="theme-swatch block" style="background: linear-gradient(135deg, #38bdf8 0 55%, #082f49 55% 100%);"></span>
+                    </button>
+                    <button type="button" class="theme-option p-1 rounded-full" data-theme-option="emerald" aria-label="Emerald green theme">
+                        <span class="theme-swatch block" style="background: linear-gradient(135deg, #34d399 0 55%, #064e3b 55% 100%);"></span>
+                    </button>
+                    <button type="button" class="theme-option p-1 rounded-full" data-theme-option="violet" aria-label="Violet theme">
+                        <span class="theme-swatch block" style="background: linear-gradient(135deg, #c084fc 0 55%, #3b0764 55% 100%);"></span>
+                    </button>
+                </div>
             </div>
         </div>
     </nav>
@@ -96,7 +213,7 @@
     <section id="home" class="pt-24 pb-20 md:pt-32 md:pb-28 blueprint-bg relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center max-w-3xl mx-auto">
-                <div class="inline-flex hero-logo rounded-2xl p-5 mb-6 border border-yellow-300/30">
+                <div class="inline-flex hero-logo rounded-2xl p-5 mb-6 border theme-surface-outline">
                     <span class="brand-mark text-7xl" aria-label="Optimizer rocket logo">
                         <svg viewBox="0 0 128 128" fill="currentColor" role="img">
                             <path d="M79 18c-16 6-30 18-41 36H25L13 70l20-3-24 32 36-28-4 22 16-13V66c20-12 34-28 40-48H79Zm3 27a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"/>
@@ -105,7 +222,7 @@
                     </span>
                 </div>
                 <h1 class="text-4xl md:text-6xl font-bold text-secondary mb-4 leading-tight">
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-amber-400 to-yellow-600">Optimizer</span>
+                    <span class="text-transparent bg-clip-text theme-heading-gradient">Optimizer</span>
                 </h1>
                 <p class="text-xl md:text-2xl text-gray-600 mb-8 font-medium">
                     "โครงสร้างสถาปัตยกรรมแห่งความทรงจำ"
@@ -115,10 +232,10 @@
                     มากกว่าเว็บไซต์ แต่คือพื้นที่เก็บความทรงจำและ Digital Yearbook ของพวกเราทุกคน
                 </p>
                 <div class="flex justify-center gap-4">
-                    <a href="#members" class="bg-secondary hover:bg-black text-primary px-8 py-3 rounded-full font-medium transition shadow-lg shadow-yellow-500/30">
+                    <a href="#members" class="theme-primary-action px-8 py-3 rounded-full font-medium transition shadow-lg">
                         ทำความรู้จักพวกเรา
                     </a>
-                    <a href="#gallery" class="bg-primary hover:bg-yellow-400 text-secondary border border-yellow-300 px-8 py-3 rounded-full font-medium transition shadow-sm">
+                    <a href="#gallery" class="theme-secondary-action border px-8 py-3 rounded-full font-medium transition shadow-sm">
                         ดูผลงาน
                     </a>
                 </div>
@@ -137,7 +254,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- โลโก้บ้าน -->
                 <div class="card-hover bg-gray-50 rounded-2xl p-8 text-center border border-gray-100">
-                    <div class="w-20 h-20 mx-auto bg-yellow-100 text-yellow-700 rounded-full flex items-center justify-center mb-6">
+                    <div class="w-20 h-20 mx-auto theme-soft-icon rounded-full flex items-center justify-center mb-6">
                         <i class="fa-solid fa-building-columns text-3xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-2">โลโก้บ้าน</h3>
@@ -158,7 +275,7 @@
                 </div>
                 <!-- แบบเสื้อบ้าน -->
                 <div class="card-hover bg-gray-50 rounded-2xl p-8 text-center border border-gray-100">
-                    <div class="w-20 h-20 mx-auto bg-amber-100 text-amber-700 rounded-full flex items-center justify-center mb-6">
+                    <div class="w-20 h-20 mx-auto theme-soft-icon rounded-full flex items-center justify-center mb-6">
                         <i class="fa-solid fa-shirt text-3xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-2">แบบเสื้อบ้าน</h3>
@@ -166,7 +283,7 @@
                 </div>
                 <!-- คำขวัญ -->
                 <div class="card-hover bg-gray-50 rounded-2xl p-8 text-center border border-gray-100">
-                    <div class="w-20 h-20 mx-auto bg-zinc-100 text-zinc-800 rounded-full flex items-center justify-center mb-6">
+                    <div class="w-20 h-20 mx-auto theme-soft-icon rounded-full flex items-center justify-center mb-6">
                         <i class="fa-solid fa-quote-left text-3xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-2">คำขวัญ</h3>
@@ -181,81 +298,25 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-secondary mb-4">สมุดพกนักพัฒนา</h2>
-                <p class="text-gray-500 max-w-2xl mx-auto text-lg">บันทึกตัวตนสมาชิกทุกคน โชว์ความเชี่ยวชาญและ Passion ด้าน AI</p>
+                <p class="text-gray-500 max-w-2xl mx-auto text-lg">บันทึกตัวตนสมาชิกจาก Google Sheet โชว์ความเชี่ยวชาญและ Passion ด้าน AI</p>
             </div>
 
-            <!-- Profile Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                
-                <!-- Card 1 -->
-                <div class="card-hover bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                    <div class="h-24 bg-gradient-to-r from-yellow-300 to-amber-500 relative"></div>
-                    <div class="px-6 pb-6 relative">
-                        <img src="https://ui-avatars.com/api/?name=Somchai&background=e2e8f0&color=64748b&size=128" alt="Profile" class="w-20 h-20 rounded-full border-4 border-white absolute -top-10 left-6 shadow-sm object-cover">
-                        <div class="pt-12">
-                            <p class="text-xs text-gray-400 font-mono mb-1">รหัส: OPT-001</p>
-                            <h3 class="text-lg font-bold text-secondary">สมชาย ใจดี (บอย)</h3>
-                            <p class="text-sm text-gray-500 mb-3 italic">"Code never lies."</p>
-                            
-                            <div class="mt-4 border-t pt-4">
-                                <p class="text-xs text-gray-500 mb-2 font-medium">ความสนใจด้าน AI:</p>
-                                <div class="flex flex-wrap gap-1">
-                                    <span class="tag bg-orange-100 text-orange-700 px-2 py-1 rounded-md">🚀 Machine Learning</span>
-                                    <span class="tag bg-yellow-100 text-yellow-800 px-2 py-1 rounded-md">👁️ Computer Vision</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+                <div class="bg-white border theme-surface-outline rounded-xl p-5 shadow-sm">
+                    <p class="text-sm text-gray-500">สมาชิกทั้งหมด</p>
+                    <p class="text-3xl font-bold text-secondary"><span id="member-count">0</span> คน</p>
                 </div>
-
-                <!-- Card 2 -->
-                <div class="card-hover bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                    <div class="h-24 bg-gradient-to-r from-zinc-900 to-yellow-500 relative"></div>
-                    <div class="px-6 pb-6 relative">
-                        <img src="https://ui-avatars.com/api/?name=Wipawa&background=e2e8f0&color=64748b&size=128" alt="Profile" class="w-20 h-20 rounded-full border-4 border-white absolute -top-10 left-6 shadow-sm object-cover">
-                        <div class="pt-12">
-                            <p class="text-xs text-gray-400 font-mono mb-1">รหัส: OPT-002</p>
-                            <h3 class="text-lg font-bold text-secondary">วิภาวา สุขสม (เจน)</h3>
-                            <p class="text-sm text-gray-500 mb-3 italic">"Language is the key."</p>
-                            
-                            <div class="mt-4 border-t pt-4">
-                                <p class="text-xs text-gray-500 mb-2 font-medium">ความสนใจด้าน AI:</p>
-                                <div class="flex flex-wrap gap-1">
-                                    <span class="tag bg-green-100 text-green-700 px-2 py-1 rounded-md">💬 NLP</span>
-                                    <span class="tag bg-pink-100 text-pink-700 px-2 py-1 rounded-md">✨ Generative AI</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="bg-white border theme-surface-outline rounded-xl p-5 shadow-sm">
+                    <p class="text-sm text-gray-500">มีข้อมูลความสนใจ AI</p>
+                    <p class="text-3xl font-bold text-secondary"><span id="interest-count">0</span> คน</p>
                 </div>
-
-                <!-- Card 3 -->
-                <div class="card-hover bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                    <div class="h-24 bg-gradient-to-r from-amber-500 to-zinc-900 relative"></div>
-                    <div class="px-6 pb-6 relative">
-                        <img src="https://ui-avatars.com/api/?name=Kittisak&background=e2e8f0&color=64748b&size=128" alt="Profile" class="w-20 h-20 rounded-full border-4 border-white absolute -top-10 left-6 shadow-sm object-cover">
-                        <div class="pt-12">
-                            <p class="text-xs text-gray-400 font-mono mb-1">รหัส: OPT-003</p>
-                            <h3 class="text-lg font-bold text-secondary">กิตติศักดิ์ พล (เอก)</h3>
-                            <p class="text-sm text-gray-500 mb-3 italic">"Data drives decisions."</p>
-                            
-                            <div class="mt-4 border-t pt-4">
-                                <p class="text-xs text-gray-500 mb-2 font-medium">ความสนใจด้าน AI:</p>
-                                <div class="flex flex-wrap gap-1">
-                                    <span class="tag bg-orange-100 text-orange-700 px-2 py-1 rounded-md">🚀 Machine Learning</span>
-                                    <span class="tag bg-gray-100 text-gray-700 px-2 py-1 rounded-md">⚖️ AI Ethics</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="bg-white border theme-surface-outline rounded-xl p-5 shadow-sm">
+                    <p class="text-sm text-gray-500">แหล่งข้อมูล</p>
+                    <p class="text-lg font-bold text-secondary">Google Sheet</p>
                 </div>
+            </div>
 
-                <!-- Card 4 -->
-                <div class="card-hover bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col justify-center items-center h-full min-h-[300px] border-dashed">
-                    <i class="fa-solid fa-user-plus text-gray-300 text-4xl mb-3"></i>
-                    <p class="text-gray-400 font-medium">ดูสมาชิกทั้งหมด</p>
-                </div>
-
+            <div id="member-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             </div>
         </div>
     </section>
@@ -271,7 +332,7 @@
             <div class="relative border-l-2 border-primary ml-3 md:ml-1/2">
                 <!-- Milestone 1 -->
                 <div class="mb-10 ml-8 relative">
-                    <div class="absolute -left-10 mt-1.5 w-4 h-4 rounded-full bg-primary ring-4 ring-yellow-100"></div>
+                    <div class="absolute -left-10 mt-1.5 w-4 h-4 rounded-full bg-primary ring-4 theme-ring"></div>
                     <div class="bg-gray-50 p-6 rounded-xl border border-gray-100 shadow-sm">
                         <span class="text-primary font-bold text-sm">สัปดาห์ที่ 1-2</span>
                         <h3 class="text-lg font-bold text-secondary mt-1">Project Milestones</h3>
@@ -280,7 +341,7 @@
                 </div>
                 <!-- Milestone 2 -->
                 <div class="mb-10 ml-8 relative">
-                    <div class="absolute -left-10 mt-1.5 w-4 h-4 rounded-full bg-primary ring-4 ring-yellow-100"></div>
+                    <div class="absolute -left-10 mt-1.5 w-4 h-4 rounded-full bg-primary ring-4 theme-ring"></div>
                     <div class="bg-gray-50 p-6 rounded-xl border border-gray-100 shadow-sm">
                         <span class="text-primary font-bold text-sm">สัปดาห์ที่ 3-4</span>
                         <h3 class="text-lg font-bold text-secondary mt-1">Team Contributions</h3>
@@ -289,7 +350,7 @@
                 </div>
                 <!-- Milestone 3 -->
                 <div class="ml-8 relative">
-                    <div class="absolute -left-10 mt-1.5 w-4 h-4 rounded-full bg-primary ring-4 ring-yellow-100"></div>
+                    <div class="absolute -left-10 mt-1.5 w-4 h-4 rounded-full bg-primary ring-4 theme-ring"></div>
                     <div class="bg-gray-50 p-6 rounded-xl border border-gray-100 shadow-sm">
                         <span class="text-primary font-bold text-sm">สัปดาห์สุดท้าย</span>
                         <h3 class="text-lg font-bold text-secondary mt-1">Legacy Archives</h3>
@@ -330,7 +391,7 @@
                         <div class="bg-gray-200 aspect-square rounded-lg overflow-hidden card-hover">
                             <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=300&q=80" alt="Presentation" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-300">
                         </div>
-                        <div class="bg-yellow-50 aspect-square rounded-lg overflow-hidden flex items-center justify-center border border-yellow-200 card-hover cursor-pointer">
+                        <div class="theme-soft-icon aspect-square rounded-lg overflow-hidden flex items-center justify-center border theme-surface-outline card-hover cursor-pointer">
                             <span class="text-primary font-medium text-sm">+ ดูรูปทั้งหมด</span>
                         </div>
                     </div>
@@ -338,12 +399,12 @@
 
                 <!-- Recognition Section -->
                 <div>
-                    <h3 class="text-2xl font-bold text-secondary mb-6 flex items-center"><i class="fa-solid fa-award text-yellow-500 mr-3"></i> รางวัลผลงานของบ้าน</h3>
+                    <h3 class="text-2xl font-bold text-secondary mb-6 flex items-center"><i class="fa-solid fa-award text-primary mr-3"></i> รางวัลผลงานของบ้าน</h3>
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                         <div class="space-y-4">
                             <!-- Award 1 -->
                             <div class="flex items-center p-4 bg-gray-50 rounded-xl border border-gray-100 card-hover">
-                                <div class="w-12 h-12 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center flex-shrink-0 text-xl">
+                                <div class="w-12 h-12 theme-soft-icon rounded-full flex items-center justify-center flex-shrink-0 text-xl">
                                     <i class="fa-solid fa-trophy"></i>
                                 </div>
                                 <div class="ml-4">
@@ -353,7 +414,7 @@
                             </div>
                             <!-- Award 2 -->
                             <div class="flex items-center p-4 bg-gray-50 rounded-xl border border-gray-100 card-hover">
-                                <div class="w-12 h-12 bg-yellow-100 text-yellow-700 rounded-full flex items-center justify-center flex-shrink-0 text-xl">
+                                <div class="w-12 h-12 theme-soft-icon rounded-full flex items-center justify-center flex-shrink-0 text-xl">
                                     <i class="fa-solid fa-medal"></i>
                                 </div>
                                 <div class="ml-4">
@@ -363,7 +424,7 @@
                             </div>
                             <!-- Award 3 -->
                             <div class="flex items-center p-4 bg-gray-50 rounded-xl border border-gray-100 card-hover">
-                                <div class="w-12 h-12 bg-zinc-100 text-zinc-800 rounded-full flex items-center justify-center flex-shrink-0 text-xl">
+                                <div class="w-12 h-12 theme-soft-icon rounded-full flex items-center justify-center flex-shrink-0 text-xl">
                                     <i class="fa-solid fa-star"></i>
                                 </div>
                                 <div class="ml-4">
@@ -405,6 +466,125 @@
             </div>
         </div>
     </footer>
+
+    <!-- Script for member cards -->
+    <script>
+        const optimizerMembers = [
+            { code: '606179', nickTh: 'พจน์', nickEn: '', firstName: 'ธีรพจน์', lastName: 'แซ่ลิน', instagram: 'Pojii', motto: 'งานเยอะ ค่อยๆทำ เดี๋ยวก็เสร็จ', interests: 'Recommender System', video: '' },
+            { code: '', nickTh: 'สิทธ์', nickEn: '', firstName: 'สิทธ์', lastName: '', instagram: 'chitcid', motto: '', interests: '', video: '' },
+            { code: '', nickTh: 'หลวง', nickEn: '', firstName: 'ภัทรบดี', lastName: '', instagram: '-', motto: '', interests: '', video: '' },
+            { code: '600217', nickTh: 'ไทม์', nickEn: 'Time', firstName: 'ก้องภพ', lastName: 'อภิศักดิ์กุล', instagram: 'timekp28_', motto: 'Consistency is the key', interests: 'AGENTIC AI', video: '' },
+            { code: '601913', nickTh: 'ปอ', nickEn: 'Por', firstName: 'รุจิวัฒน์', lastName: '', instagram: 'rujiwatp', motto: 'Hope for the best, prepare for the worst', interests: 'Agentic AI, Automation, RAG', video: 'https://youtu.be/nWlH2smp5Kg' },
+            { code: '601779', nickTh: 'พีซี', nickEn: '', firstName: 'เพ็ญพิชชา', lastName: '', instagram: 'forrealpesea', motto: '', interests: '', video: '' },
+            { code: '600882', nickTh: 'อะตอม', nickEn: 'Atom', firstName: 'เพชรพัฒน์', lastName: 'แสนศรี', instagram: 'ryuiji_art', motto: '', interests: '', video: '' },
+            { code: '', nickTh: 'ชาลี', nickEn: '', firstName: 'ชนแดน', lastName: '', instagram: 'mocha_char', motto: '', interests: '', video: '' },
+            { code: '603623', nickTh: 'แชมป์', nickEn: 'Champ', firstName: 'นราวิชญ์', lastName: 'พิกุลทอง', instagram: 'nongzhampqq_', motto: '', interests: '', video: '' },
+            { code: '', nickTh: 'ข้าวปั้น', nickEn: '', firstName: 'ปัญจพงศ์', lastName: '', instagram: 'khawpun_kub', motto: '', interests: '', video: '' },
+            { code: '', nickTh: 'เนเน่', nickEn: '', firstName: 'พัชริดา', lastName: '', instagram: 'ittnene', motto: '', interests: '', video: '' },
+            { code: '', nickTh: 'จันทร์เจ้า', nickEn: '', firstName: 'พลอยปภัส', lastName: '', instagram: '__ploypapat__', motto: '', interests: '', video: '' },
+            { code: '', nickTh: 'ฮิวโก้', nickEn: '', firstName: 'สหรัถ', lastName: '', instagram: 'hugo_yps', motto: '', interests: '', video: '' },
+            { code: '', nickTh: 'ภีม', nickEn: '', firstName: 'ปัฐธกร', lastName: 'แน่นหนา', instagram: 'paeem__', motto: '', interests: '', video: '' },
+            { code: '', nickTh: 'ฟลู๊ค', nickEn: '', firstName: 'ภิสิทธิ์', lastName: '', instagram: '_f_u_l_k_e', motto: '', interests: '', video: '' },
+            { code: '', nickTh: 'อชิ', nickEn: '', firstName: 'กิตติพงศ์', lastName: '', instagram: 'achi.krab.3', motto: '', interests: '', video: '' },
+            { code: '604568', nickTh: 'จิม', nickEn: 'Jim', firstName: 'ศุถณัฐ', lastName: 'ธีรรักษ์ตระกูล', instagram: 'jjimst', motto: 'ถ้าคนจริง โอวัลตินต้องละลาย', interests: '', video: '' },
+            { code: '601733', nickTh: 'โชกุน', nickEn: '', firstName: 'กฤตภาส', lastName: 'ชุมทอง', instagram: '_krittapas__', motto: '', interests: '', video: '' },
+            { code: '605188', nickTh: 'เฟิร์ส', nickEn: '', firstName: 'ธนวินท์', lastName: '', instagram: 'mister1st_11', motto: '', interests: '', video: '' },
+            { code: '', nickTh: 'เอิร์ธ', nickEn: '', firstName: 'เอกภพ', lastName: '', instagram: '-', motto: '', interests: '', video: '' },
+            { code: '', nickTh: 'เเพม', nickEn: '', firstName: 'ณัชยภรณ์', lastName: '', instagram: 'your_annee', motto: '', interests: '', video: '' },
+            { code: '600749', nickTh: 'เรน', nickEn: '', firstName: 'วรุณ', lastName: '', instagram: 'naekniar', motto: '', interests: '', video: '' },
+            { code: '600287', nickTh: 'ยู้', nickEn: 'Yuu', firstName: 'นุชชาดา', lastName: '', instagram: '', motto: '', interests: '', video: '' },
+            { code: '', nickTh: 'TA - แคลวิณ', nickEn: '', firstName: 'คณิณ', lastName: '', instagram: 'kanin_calvin', motto: '', interests: '', video: '' },
+            { code: '', nickTh: 'TA - หมิวหมิว', nickEn: '', firstName: 'บุญฐิตา', lastName: 'พรรณกุล', instagram: 'm_miewmiew_', motto: '', interests: '', video: '' },
+        ];
+
+        const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;',
+        }[char]));
+
+        const splitInterests = (value) => String(value ?? '')
+            .split(',')
+            .map((item) => item.trim())
+            .filter(Boolean);
+
+        const cleanInstagram = (handle) => {
+            const value = String(handle ?? '').trim().replace(/^@/, '');
+            return value && value !== '-' ? value : '';
+        };
+
+        const validUrl = (url) => /^https?:\/\//.test(String(url ?? '').trim());
+
+        const renderMemberCards = () => {
+            const grid = document.getElementById('member-grid');
+            if (!grid) return;
+
+            document.getElementById('member-count').textContent = optimizerMembers.length;
+            document.getElementById('interest-count').textContent = optimizerMembers.filter((member) => splitInterests(member.interests).length).length;
+
+            grid.innerHTML = optimizerMembers.map((member, index) => {
+                const displayName = [member.firstName, member.lastName].filter(Boolean).join(' ') || member.nickTh || member.nickEn || 'Optimizer';
+                const nickname = [member.nickTh, member.nickEn].filter(Boolean).join(' / ');
+                const avatarName = encodeURIComponent(member.nickEn || member.nickTh || member.firstName || 'Optimizer');
+                const instagram = cleanInstagram(member.instagram);
+                const interests = splitInterests(member.interests);
+                const interestTags = interests.length
+                    ? interests.map((interest) => `<span class="tag theme-soft-icon px-2 py-1 rounded-md">${escapeHtml(interest)}</span>`).join('')
+                    : '<span class="tag bg-gray-100 text-gray-500 px-2 py-1 rounded-md">กำลังเติมข้อมูล</span>';
+                const instagramLink = instagram
+                    ? `<a href="https://www.instagram.com/${encodeURIComponent(instagram)}" target="_blank" rel="noopener" class="inline-flex items-center text-xs text-gray-500 hover:text-secondary transition"><i class="fa-brands fa-instagram mr-1"></i>@${escapeHtml(instagram)}</a>`
+                    : '<span class="text-xs text-gray-400">ยังไม่มี IG</span>';
+                const videoLink = validUrl(member.video)
+                    ? `<a href="${escapeHtml(member.video)}" target="_blank" rel="noopener" class="inline-flex items-center text-xs theme-primary-action px-3 py-1.5 rounded-full font-medium transition"><i class="fa-solid fa-play mr-1"></i>ดูผลงาน</a>`
+                    : '';
+
+                return `
+                    <article class="member-card card-hover bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="h-24 theme-member-top relative"></div>
+                        <div class="px-6 pb-6 relative">
+                            <img src="https://ui-avatars.com/api/?name=${avatarName}&background=111111&color=ffd60a&bold=true&size=128" alt="${escapeHtml(displayName)}" class="w-20 h-20 rounded-full border-4 border-white absolute -top-10 left-6 shadow-sm object-cover">
+                            <div class="pt-12">
+                                <p class="text-xs text-gray-400 font-mono mb-1">${member.code ? `รหัส: ${escapeHtml(member.code)}` : 'OPTIMIZER SS6'}</p>
+                                <h3 class="text-lg font-bold text-secondary leading-snug">${escapeHtml(displayName)}</h3>
+                                <p class="text-sm text-gray-500 mb-3">${escapeHtml(nickname || 'สมาชิกบ้าน Optimizer')}</p>
+                                <p class="text-sm text-gray-500 mb-4 italic min-h-[40px]">"${escapeHtml(member.motto || 'พร้อมเรียนรู้และเติบโตไปกับทีม')}"</p>
+
+                                <div class="border-t pt-4">
+                                    <p class="text-xs text-gray-500 mb-2 font-medium">ความสนใจด้าน AI:</p>
+                                    <div class="flex flex-wrap gap-1 mb-4">${interestTags}</div>
+                                    <div class="flex items-center justify-between gap-3">
+                                        ${instagramLink}
+                                        ${videoLink}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        };
+
+        renderMemberCards();
+
+        const applyTheme = (theme) => {
+            const selectedTheme = theme || 'optimizer';
+            document.documentElement.dataset.theme = selectedTheme;
+            try {
+                localStorage.setItem('optimizer-theme', selectedTheme);
+            } catch (error) {}
+            document.querySelectorAll('[data-theme-option]').forEach((button) => {
+                button.setAttribute('aria-pressed', String(button.dataset.themeOption === selectedTheme));
+            });
+        };
+
+        document.querySelectorAll('[data-theme-option]').forEach((button) => {
+            button.addEventListener('click', () => applyTheme(button.dataset.themeOption));
+        });
+
+        applyTheme(document.documentElement.dataset.theme || 'optimizer');
+    </script>
 
     <!-- Script for mobile menu -->
     <script>
