@@ -82,6 +82,14 @@
         .clip-frame {
             aspect-ratio: 16 / 9;
         }
+        .drive-gallery-frame {
+            height: 26rem;
+        }
+        @media (max-width: 640px) {
+            .drive-gallery-frame {
+                height: 22rem;
+            }
+        }
         .theme-heading-gradient {
             background-image: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
         }
@@ -399,26 +407,32 @@
                 
                 <!-- Gallery Section -->
                 <div>
-                    <h3 class="text-2xl font-bold text-secondary mb-6 flex items-center"><i class="fa-solid fa-images text-primary mr-3"></i> ประมวลภาพกิจกรรม</h3>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        <!-- Placeholder Images -->
-                        <div class="bg-gray-200 aspect-square rounded-lg overflow-hidden card-hover">
-                            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=300&q=80" alt="Team" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-300">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                        <h3 class="text-2xl font-bold text-secondary flex items-center"><i class="fa-solid fa-images text-primary mr-3"></i> ประมวลภาพกิจกรรม</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="https://drive.google.com/drive/folders/1JVGRIUVJxuPbl-p6hVnVWsGBuIdnkTWl?usp=drive_link" target="_blank" rel="noopener" class="theme-primary-action inline-flex items-center px-4 py-2 rounded-full text-sm font-medium transition shadow-sm">
+                                <i class="fa-solid fa-cloud-arrow-up mr-2"></i>อัพโหลดรูป
+                            </a>
+                            <a href="https://drive.google.com/drive/folders/1JVGRIUVJxuPbl-p6hVnVWsGBuIdnkTWl?usp=drive_link" target="_blank" rel="noopener" class="theme-secondary-action inline-flex items-center px-4 py-2 rounded-full text-sm font-medium transition shadow-sm">
+                                <i class="fa-brands fa-google-drive mr-2"></i>เปิดอัลบั้ม
+                            </a>
                         </div>
-                        <div class="bg-gray-200 aspect-square rounded-lg overflow-hidden card-hover">
-                            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=300&q=80" alt="Work" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-300">
-                        </div>
-                        <div class="bg-gray-200 aspect-square rounded-lg overflow-hidden card-hover">
-                            <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=300&q=80" alt="Meeting" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-300">
-                        </div>
-                        <div class="bg-gray-200 aspect-square rounded-lg overflow-hidden card-hover">
-                            <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=300&q=80" alt="Tech" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-300">
-                        </div>
-                        <div class="bg-gray-200 aspect-square rounded-lg overflow-hidden card-hover">
-                            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=300&q=80" alt="Presentation" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-300">
-                        </div>
-                        <div class="theme-soft-icon aspect-square rounded-lg overflow-hidden flex items-center justify-center border theme-surface-outline card-hover cursor-pointer">
-                            <span class="text-primary font-medium text-sm">+ ดูรูปทั้งหมด</span>
+                    </div>
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                        <iframe
+                            src="https://drive.google.com/embeddedfolderview?id=1JVGRIUVJxuPbl-p6hVnVWsGBuIdnkTWl#grid"
+                            title="SPAI SS6 Gallery"
+                            class="drive-gallery-frame w-full border-0"
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <div class="p-5 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                            <div>
+                                <p class="text-sm font-bold text-secondary">SPAI_SS6_Gallery</p>
+                                <p class="text-xs text-gray-500">รูปภาพจาก Google Drive ของกิจกรรม Optimizer SS6</p>
+                            </div>
+                            <a href="https://drive.google.com/drive/folders/1JVGRIUVJxuPbl-p6hVnVWsGBuIdnkTWl?usp=drive_link" target="_blank" rel="noopener" class="inline-flex items-center text-sm text-primary hover:text-secondary font-medium transition">
+                                ดูรูปทั้งหมด <i class="fa-solid fa-arrow-up-right-from-square ml-2"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
