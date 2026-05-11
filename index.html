@@ -143,6 +143,24 @@
             aspect-ratio: 4 / 3;
             background: var(--muted-surface);
         }
+        .drive-gallery-sentinel {
+            display: flex;
+            justify-content: center;
+        }
+        .drive-gallery-sentinel[hidden] {
+            display: none;
+        }
+        .drive-gallery-loader {
+            width: 2rem;
+            height: 2rem;
+            border: 3px solid rgba(var(--primary-rgb), 0.2);
+            border-top-color: var(--primary);
+            border-radius: 999px;
+            animation: drive-gallery-spin 0.85s linear infinite;
+        }
+        @keyframes drive-gallery-spin {
+            to { transform: rotate(360deg); }
+        }
         @media (max-width: 640px) {
             .drive-photo-grid {
                 grid-template-columns: 1fr;
@@ -365,8 +383,8 @@
     <section id="about" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-secondary mb-4">ประตูบานแรกที่สะท้อนอัตลักษณ์</h2>
-                <p class="text-gray-500 max-w-2xl mx-auto text-lg">หน้า About Us คือการประกาศตัวตน เผยให้เห็น DNA ของทีมที่หล่อหลอมรวมกัน</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-secondary mb-4">รู้จักตัวตนของบ้าน Optimizer</h2>
+                <p class="text-gray-500 max-w-2xl mx-auto text-lg">พื้นที่ที่รวบรวมเรื่องราว สัญลักษณ์ และแนวคิดที่สะท้อนความเป็นทีมของพวกเรา</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -376,7 +394,7 @@
                         <i class="fa-solid fa-building-columns text-3xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-2">โลโก้บ้าน</h3>
-                    <p class="text-gray-500 text-sm">สัญลักษณ์หลักประจำทีม ที่สื่อถึงความมั่นคงและรากฐานทางเทคโนโลยี</p>
+                    <p class="text-gray-500 text-sm">ภาพจำหลักของบ้านที่สะท้อนพลัง ความตั้งใจ และตัวตนของทีม Optimizer</p>
                 </div>
                 <!-- สัญลักษณ์บ้าน -->
                 <div class="card-hover bg-gray-50 rounded-2xl p-8 text-center border border-gray-100">
@@ -386,7 +404,7 @@
                         </span>
                     </div>
                     <h3 class="text-xl font-bold mb-2">สัญลักษณ์บ้าน</h3>
-                    <p class="text-gray-500 text-sm">ไอคอนแห่งความภาคภูมิใจและจิตวิญญาณของ Optimizer</p>
+                    <p class="text-gray-500 text-sm">เครื่องหมายที่เชื่อมโยงสมาชิกทุกคนเข้ากับเป้าหมายและจิตวิญญาณเดียวกัน</p>
                 </div>
                 <!-- แบบเสื้อบ้าน -->
                 <div class="card-hover bg-gray-50 rounded-2xl p-8 text-center border border-gray-100">
@@ -394,7 +412,7 @@
                         <i class="fa-solid fa-shirt text-3xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-2">แบบเสื้อบ้าน</h3>
-                    <p class="text-gray-500 text-sm">เอกลักษณ์การแต่งกายของสมาชิก ที่หลอมรวมทุกคนเป็นหนึ่งเดียว</p>
+                    <p class="text-gray-500 text-sm">ดีไซน์ที่บอกเล่าความเป็นทีมอย่างเรียบง่าย ชัดเจน และพร้อมลุยไปด้วยกัน</p>
                 </div>
                 <!-- คำขวัญ -->
                 <div class="card-hover bg-gray-50 rounded-2xl p-8 text-center border border-gray-100">
@@ -402,7 +420,7 @@
                         <i class="fa-solid fa-quote-left text-3xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-2">คำขวัญ</h3>
-                    <p class="text-gray-500 text-sm">"พัฒนาอย่างไม่หยุดยั้ง เพื่อผลลัพธ์ที่ดีที่สุด" (วลีที่แสดงจุดยืน)</p>
+                    <p class="text-gray-500 text-sm">"ปรับให้ไว ไปให้สุด" แนวคิดสั้น ๆ ที่ย้ำให้เราพร้อมเรียนรู้ ลงมือทำ และพัฒนาอย่างต่อเนื่อง</p>
                 </div>
             </div>
         </div>
@@ -604,6 +622,9 @@
                         <div id="drive-photo-grid" class="drive-photo-grid p-5" aria-label="รูปภาพกิจกรรม Optimizer SS6">
                             <div class="drive-photo-card rounded-lg overflow-hidden animate-pulse"></div>
                         </div>
+                        <div id="drive-gallery-sentinel" class="drive-gallery-sentinel px-5 pb-5" aria-hidden="true" hidden>
+                            <span class="drive-gallery-loader" aria-hidden="true"></span>
+                        </div>
                         <div class="p-5 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                             <div>
                                 <p class="text-sm font-bold text-secondary">รูปภาพกิจกรรม</p>
@@ -691,6 +712,7 @@
         const DRIVE_FOLDER_ID = '1JVGRIUVJxuPbl-p6hVnVWsGBuIdnkTWl';
         const DRIVE_EMBEDDED_URL = `https://drive.google.com/embeddedfolderview?id=${DRIVE_FOLDER_ID}`;
         const DRIVE_REQUEST_TIMEOUT_MS = 9000;
+        const DRIVE_GALLERY_BATCH_SIZE = 8;
         const DRIVE_GALLERY_SOURCES = [
             {
                 name: 'codetabs',
@@ -709,6 +731,8 @@
         let sourceDataLoading = false;
         let driveGalleryLoading = false;
         let driveGalleryItems = fallbackDriveGalleryItems;
+        let driveGalleryRenderedCount = 0;
+        let driveGalleryObserver = null;
         let lastSheetSignature = '';
         let lastDriveGallerySignature = '';
         let optimizerMembers = [
@@ -922,15 +946,64 @@
             }
         };
 
+        const createDrivePhotoCard = (item, index) => `
+                <a href="https://drive.google.com/file/d/${escapeHtml(item.id)}/view?usp=drive_web" target="_blank" rel="noopener" class="drive-photo-card card-hover block rounded-lg overflow-hidden border border-gray-100 shadow-sm">
+                    <img src="https://drive.google.com/thumbnail?id=${escapeHtml(item.id)}&sz=w900&cacheBust=${Date.now()}" alt="รูปภาพกิจกรรม Optimizer SS6 ${index + 1}" class="w-full h-full object-cover" loading="lazy">
+                </a>
+            `;
+
+        const setDriveGallerySentinelVisible = (isVisible) => {
+            const sentinel = document.getElementById('drive-gallery-sentinel');
+            if (!sentinel) return;
+            sentinel.hidden = !isVisible;
+        };
+
+        const appendDriveGalleryBatch = () => {
+            const grid = document.getElementById('drive-photo-grid');
+            if (!grid) return;
+
+            const batch = driveGalleryItems.slice(
+                driveGalleryRenderedCount,
+                driveGalleryRenderedCount + DRIVE_GALLERY_BATCH_SIZE,
+            );
+
+            if (!batch.length) {
+                setDriveGallerySentinelVisible(false);
+                return;
+            }
+
+            const startIndex = driveGalleryRenderedCount;
+            grid.insertAdjacentHTML('beforeend', batch
+                .map((item, index) => createDrivePhotoCard(item, startIndex + index))
+                .join(''));
+            driveGalleryRenderedCount += batch.length;
+            setDriveGallerySentinelVisible(driveGalleryRenderedCount < driveGalleryItems.length);
+        };
+
+        const setupDriveGalleryInfiniteScroll = () => {
+            const sentinel = document.getElementById('drive-gallery-sentinel');
+            if (!sentinel) return;
+
+            if (driveGalleryObserver) driveGalleryObserver.disconnect();
+            if (!('IntersectionObserver' in window)) {
+                while (driveGalleryRenderedCount < driveGalleryItems.length) appendDriveGalleryBatch();
+                return;
+            }
+
+            driveGalleryObserver = new IntersectionObserver((entries) => {
+                if (entries.some((entry) => entry.isIntersecting)) appendDriveGalleryBatch();
+            }, { rootMargin: '420px 0px 420px 0px' });
+            driveGalleryObserver.observe(sentinel);
+        };
+
         const renderDriveGallery = () => {
             const grid = document.getElementById('drive-photo-grid');
             if (!grid) return;
 
-            grid.innerHTML = driveGalleryItems.map((item, index) => `
-                <a href="https://drive.google.com/file/d/${escapeHtml(item.id)}/view?usp=drive_web" target="_blank" rel="noopener" class="drive-photo-card card-hover block rounded-lg overflow-hidden border border-gray-100 shadow-sm">
-                    <img src="https://drive.google.com/thumbnail?id=${escapeHtml(item.id)}&sz=w900&cacheBust=${Date.now()}" alt="รูปภาพกิจกรรม Optimizer SS6 ${index + 1}" class="w-full h-full object-cover" loading="lazy">
-                </a>
-            `).join('');
+            grid.innerHTML = '';
+            driveGalleryRenderedCount = 0;
+            appendDriveGalleryBatch();
+            setupDriveGalleryInfiniteScroll();
         };
 
         const withCacheBust = (url) => `${url}${url.includes('?') ? '&' : '?'}cacheBust=${Date.now()}`;
