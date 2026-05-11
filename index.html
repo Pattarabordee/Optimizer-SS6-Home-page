@@ -724,15 +724,15 @@
         const DRIVE_FOLDER_ID = '1JVGRIUVJxuPbl-p6hVnVWsGBuIdnkTWl';
         const DRIVE_EMBEDDED_URL = `https://drive.google.com/embeddedfolderview?id=${DRIVE_FOLDER_ID}`;
         const DRIVE_REQUEST_TIMEOUT_MS = 9000;
-        const DRIVE_GALLERY_BATCH_SIZE = 4;
+        const DRIVE_GALLERY_BATCH_SIZE = 8;
         const DRIVE_GALLERY_SOURCES = [
+            {
+                name: 'allorigins',
+                buildUrl: (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+            },
             {
                 name: 'codetabs',
                 buildUrl: (url) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
-            },
-            {
-                name: 'jina-reader',
-                buildUrl: (url) => `https://r.jina.ai/http://${url}`,
             },
         ];
         const fallbackDriveGalleryItems = [
@@ -960,7 +960,7 @@
 
         const createDrivePhotoCard = (item, index) => `
                 <a href="https://drive.google.com/file/d/${escapeHtml(item.id)}/view?usp=drive_web" target="_blank" rel="noopener" class="drive-photo-card card-hover block rounded-lg overflow-hidden border border-gray-100 shadow-sm">
-                    <img src="https://drive.google.com/thumbnail?id=${escapeHtml(item.id)}&sz=w900" alt="รูปภาพกิจกรรม Optimizer SS6 ${index + 1}" class="w-full h-full object-cover" loading="lazy" decoding="async">
+                    <img src="https://drive.google.com/thumbnail?id=${escapeHtml(item.id)}&sz=w640" alt="รูปภาพกิจกรรม Optimizer SS6 ${index + 1}" class="w-full h-full object-cover" loading="${index < 4 ? 'eager' : 'lazy'}" fetchpriority="${index < 2 ? 'high' : 'auto'}" decoding="async">
                 </a>
             `;
 
@@ -1047,16 +1047,14 @@
         };
 
         const extractDriveGalleryItems = (html) => {
-            const documentFragment = new DOMParser().parseFromString(html, 'text/html');
-            const entryIds = [...documentFragment.querySelectorAll('.flip-entry[id^="entry-"]')]
-                .map((entry) => entry.id.replace(/^entry-/, ''));
-            const textIds = [
-                ...[...String(html).matchAll(/entry-([A-Za-z0-9_-]{20,})/g)].map((match) => match[1]),
-                ...[...String(html).matchAll(/thumbnail\?id=([A-Za-z0-9_-]{20,})/g)].map((match) => match[1]),
-                ...[...String(html).matchAll(/\/file\/d\/([A-Za-z0-9_-]{20,})/g)].map((match) => match[1]),
+            const source = String(html ?? '');
+            const ids = [
+                ...[...source.matchAll(/entry-([A-Za-z0-9_-]{20,})/g)].map((match) => match[1]),
+                ...[...source.matchAll(/thumbnail\?id=([A-Za-z0-9_-]{20,})/g)].map((match) => match[1]),
+                ...[...source.matchAll(/\/file\/d\/([A-Za-z0-9_-]{20,})/g)].map((match) => match[1]),
+                ...[...source.matchAll(/[?&]id=([A-Za-z0-9_-]{20,})/g)].map((match) => match[1]),
             ];
-
-            return uniqueDriveItems([...entryIds, ...textIds]);
+            return uniqueDriveItems(ids);
         };
 
         const loadDriveGalleryData = async () => {
