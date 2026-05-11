@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Optimizer SS6 - Super AI Engineer</title>
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
-    <link rel="preload" as="image" href="assets/logo.svg" type="image/svg+xml">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -721,6 +720,7 @@
         const SHEET_ID = '1RcLKNSw49T5nktRj0YyOLTf3PyrHJXI35yVGJtTuaJ0';
         const SHEET_GID = '0';
         const SHEET_REFRESH_MS = 30000;
+        const DRIVE_REFRESH_MS = 180000;
         const DRIVE_FOLDER_ID = '1JVGRIUVJxuPbl-p6hVnVWsGBuIdnkTWl';
         const DRIVE_EMBEDDED_URL = `https://drive.google.com/embeddedfolderview?id=${DRIVE_FOLDER_ID}`;
         const DRIVE_REQUEST_TIMEOUT_MS = 9000;
@@ -960,7 +960,7 @@
 
         const createDrivePhotoCard = (item, index) => `
                 <a href="https://drive.google.com/file/d/${escapeHtml(item.id)}/view?usp=drive_web" target="_blank" rel="noopener" class="drive-photo-card card-hover block rounded-lg overflow-hidden border border-gray-100 shadow-sm">
-                    <img src="https://drive.google.com/thumbnail?id=${escapeHtml(item.id)}&sz=w900&cacheBust=${Date.now()}" alt="รูปภาพกิจกรรม Optimizer SS6 ${index + 1}" class="w-full h-full object-cover" loading="lazy">
+                    <img src="https://drive.google.com/thumbnail?id=${escapeHtml(item.id)}&sz=w900" alt="รูปภาพกิจกรรม Optimizer SS6 ${index + 1}" class="w-full h-full object-cover" loading="lazy" decoding="async">
                 </a>
             `;
 
@@ -1018,8 +1018,6 @@
             setupDriveGalleryInfiniteScroll();
         };
 
-        const withCacheBust = (url) => `${url}${url.includes('?') ? '&' : '?'}cacheBust=${Date.now()}`;
-
         const fetchTextWithTimeout = async (url, timeoutMs = DRIVE_REQUEST_TIMEOUT_MS) => {
             const controller = new AbortController();
             const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
@@ -1062,7 +1060,7 @@
         };
 
         const loadDriveGalleryData = async () => {
-            const targetUrl = withCacheBust(DRIVE_EMBEDDED_URL);
+            const targetUrl = DRIVE_EMBEDDED_URL;
             const errors = [];
 
             for (const source of DRIVE_GALLERY_SOURCES) {
@@ -1242,7 +1240,7 @@
         refreshSourceData();
         refreshDriveGallery();
         window.setInterval(refreshSourceData, SHEET_REFRESH_MS);
-        window.setInterval(refreshDriveGallery, SHEET_REFRESH_MS);
+        window.setInterval(refreshDriveGallery, DRIVE_REFRESH_MS);
         window.addEventListener('focus', () => {
             refreshSourceData();
             refreshDriveGallery();
