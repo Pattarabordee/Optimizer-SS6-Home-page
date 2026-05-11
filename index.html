@@ -688,8 +688,19 @@
         const SHEET_ID = '1RcLKNSw49T5nktRj0YyOLTf3PyrHJXI35yVGJtTuaJ0';
         const SHEET_GID = '0';
         const SHEET_REFRESH_MS = 30000;
-        const DRIVE_EMBEDDED_URL = 'https://drive.google.com/embeddedfolderview?id=1JVGRIUVJxuPbl-p6hVnVWsGBuIdnkTWl#grid';
-        const DRIVE_PROXY_URL = `https://api.allorigins.win/raw?url=${encodeURIComponent(DRIVE_EMBEDDED_URL)}`;
+        const DRIVE_FOLDER_ID = '1JVGRIUVJxuPbl-p6hVnVWsGBuIdnkTWl';
+        const DRIVE_EMBEDDED_URL = `https://drive.google.com/embeddedfolderview?id=${DRIVE_FOLDER_ID}`;
+        const DRIVE_REQUEST_TIMEOUT_MS = 9000;
+        const DRIVE_GALLERY_SOURCES = [
+            {
+                name: 'codetabs',
+                buildUrl: (url) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+            },
+            {
+                name: 'jina-reader',
+                buildUrl: (url) => `https://r.jina.ai/http://${url}`,
+            },
+        ];
         const fallbackDriveGalleryItems = [
             { id: '1WY6CiyJhyQqILx2WqwkU2Z0EYS64z4UY' },
             { id: '1gnHtXPIWe_tgsnsuIOFEC8nr6P5pXxBK' },
@@ -922,15 +933,65 @@
             `).join('');
         };
 
-        const loadDriveGalleryData = async () => {
-            const response = await fetch(`${DRIVE_PROXY_URL}&cacheBust=${Date.now()}`);
-            if (!response.ok) throw new Error('Drive gallery request failed');
+        const withCacheBust = (url) => `${url}${url.includes('?') ? '&' : '?'}cacheBust=${Date.now()}`;
 
-            const html = await response.text();
+        const fetchTextWithTimeout = async (url, timeoutMs = DRIVE_REQUEST_TIMEOUT_MS) => {
+            const controller = new AbortController();
+            const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
+
+            try {
+                const response = await fetch(url, {
+                    cache: 'no-store',
+                    signal: controller.signal,
+                });
+                if (!response.ok) throw new Error(`Request failed with ${response.status}`);
+                return response.text();
+            } finally {
+                window.clearTimeout(timeout);
+            }
+        };
+
+        const uniqueDriveItems = (ids) => {
+            const seen = new Set();
+            return ids
+                .filter((id) => /^[A-Za-z0-9_-]{20,}$/.test(id) && id !== DRIVE_FOLDER_ID)
+                .filter((id) => {
+                    if (seen.has(id)) return false;
+                    seen.add(id);
+                    return true;
+                })
+                .map((id) => ({ id }));
+        };
+
+        const extractDriveGalleryItems = (html) => {
             const documentFragment = new DOMParser().parseFromString(html, 'text/html');
-            return [...documentFragment.querySelectorAll('.flip-entry[id^="entry-"]')]
-                .map((entry) => ({ id: entry.id.replace(/^entry-/, '') }))
-                .filter((item) => /^[A-Za-z0-9_-]+$/.test(item.id));
+            const entryIds = [...documentFragment.querySelectorAll('.flip-entry[id^="entry-"]')]
+                .map((entry) => entry.id.replace(/^entry-/, ''));
+            const textIds = [
+                ...[...String(html).matchAll(/entry-([A-Za-z0-9_-]{20,})/g)].map((match) => match[1]),
+                ...[...String(html).matchAll(/thumbnail\?id=([A-Za-z0-9_-]{20,})/g)].map((match) => match[1]),
+                ...[...String(html).matchAll(/\/file\/d\/([A-Za-z0-9_-]{20,})/g)].map((match) => match[1]),
+            ];
+
+            return uniqueDriveItems([...entryIds, ...textIds]);
+        };
+
+        const loadDriveGalleryData = async () => {
+            const targetUrl = withCacheBust(DRIVE_EMBEDDED_URL);
+            const errors = [];
+
+            for (const source of DRIVE_GALLERY_SOURCES) {
+                try {
+                    const html = await fetchTextWithTimeout(source.buildUrl(targetUrl));
+                    const items = extractDriveGalleryItems(html);
+                    if (items.length) return items;
+                    errors.push(`${source.name}: no images found`);
+                } catch (error) {
+                    errors.push(`${source.name}: ${error.message}`);
+                }
+            }
+
+            throw new Error(`Drive gallery request failed (${errors.join('; ')})`);
         };
 
         const refreshDriveGallery = async () => {
