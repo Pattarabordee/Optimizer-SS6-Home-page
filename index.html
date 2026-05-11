@@ -252,6 +252,9 @@
         html[data-theme="dark"] .dark-mode-toggle {
             color: #cbd5e1;
         }
+        html[data-theme="dark"] .clip-play-btn {
+            color: #020617 !important;
+        }
     </style>
     <script>
         tailwind.config = {
@@ -1048,7 +1051,7 @@
                     ? `<a href="${escapeHtml(clip.url)}" target="_blank" rel="noopener" class="group relative block w-full h-full">
                             <img src="${escapeHtml(video.thumbnailUrl)}" alt="${escapeHtml(displayName)} clip preview" class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
                             <span class="absolute inset-0 bg-black/35 flex items-center justify-center">
-                                <span class="w-16 h-16 rounded-full bg-white/95 text-secondary flex items-center justify-center shadow-lg transition group-hover:scale-105">
+                                <span class="clip-play-btn w-16 h-16 rounded-full bg-white/95 text-secondary flex items-center justify-center shadow-lg transition group-hover:scale-105">
                                     <i class="fa-solid fa-play text-2xl ml-1"></i>
                                 </span>
                             </span>
