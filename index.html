@@ -136,8 +136,14 @@
         }
         .drive-photo-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 1rem;
+        }
+        .drive-gallery-scroll {
+            max-height: min(31rem, 74vh);
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            scroll-behavior: smooth;
         }
         .drive-photo-card {
             aspect-ratio: 4 / 3;
@@ -163,7 +169,11 @@
         }
         @media (max-width: 640px) {
             .drive-photo-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 0.75rem;
+            }
+            .drive-gallery-scroll {
+                max-height: min(24rem, 70vh);
             }
         }
         .theme-heading-gradient {
@@ -619,11 +629,13 @@
                         </div>
                     </div>
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                        <div id="drive-photo-grid" class="drive-photo-grid p-5" aria-label="รูปภาพกิจกรรม Optimizer SS6">
-                            <div class="drive-photo-card rounded-lg overflow-hidden animate-pulse"></div>
-                        </div>
-                        <div id="drive-gallery-sentinel" class="drive-gallery-sentinel px-5 pb-5" aria-hidden="true" hidden>
-                            <span class="drive-gallery-loader" aria-hidden="true"></span>
+                        <div id="drive-gallery-scroll" class="drive-gallery-scroll" tabindex="0" aria-label="เลื่อนดูรูปภาพกิจกรรม Optimizer SS6">
+                            <div id="drive-photo-grid" class="drive-photo-grid p-5" aria-label="รูปภาพกิจกรรม Optimizer SS6">
+                                <div class="drive-photo-card rounded-lg overflow-hidden animate-pulse"></div>
+                            </div>
+                            <div id="drive-gallery-sentinel" class="drive-gallery-sentinel px-5 pb-5" aria-hidden="true" hidden>
+                                <span class="drive-gallery-loader" aria-hidden="true"></span>
+                            </div>
                         </div>
                         <div class="p-5 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                             <div>
@@ -712,7 +724,7 @@
         const DRIVE_FOLDER_ID = '1JVGRIUVJxuPbl-p6hVnVWsGBuIdnkTWl';
         const DRIVE_EMBEDDED_URL = `https://drive.google.com/embeddedfolderview?id=${DRIVE_FOLDER_ID}`;
         const DRIVE_REQUEST_TIMEOUT_MS = 9000;
-        const DRIVE_GALLERY_BATCH_SIZE = 8;
+        const DRIVE_GALLERY_BATCH_SIZE = 4;
         const DRIVE_GALLERY_SOURCES = [
             {
                 name: 'codetabs',
@@ -732,7 +744,7 @@
         let driveGalleryLoading = false;
         let driveGalleryItems = fallbackDriveGalleryItems;
         let driveGalleryRenderedCount = 0;
-        let driveGalleryObserver = null;
+        let driveGalleryScrollHandler = null;
         let lastSheetSignature = '';
         let lastDriveGallerySignature = '';
         let optimizerMembers = [
@@ -981,19 +993,18 @@
         };
 
         const setupDriveGalleryInfiniteScroll = () => {
-            const sentinel = document.getElementById('drive-gallery-sentinel');
-            if (!sentinel) return;
+            const scrollArea = document.getElementById('drive-gallery-scroll');
+            if (!scrollArea) return;
 
-            if (driveGalleryObserver) driveGalleryObserver.disconnect();
-            if (!('IntersectionObserver' in window)) {
-                while (driveGalleryRenderedCount < driveGalleryItems.length) appendDriveGalleryBatch();
-                return;
+            if (driveGalleryScrollHandler) {
+                scrollArea.removeEventListener('scroll', driveGalleryScrollHandler);
             }
 
-            driveGalleryObserver = new IntersectionObserver((entries) => {
-                if (entries.some((entry) => entry.isIntersecting)) appendDriveGalleryBatch();
-            }, { rootMargin: '420px 0px 420px 0px' });
-            driveGalleryObserver.observe(sentinel);
+            driveGalleryScrollHandler = () => {
+                const distanceFromBottom = scrollArea.scrollHeight - scrollArea.scrollTop - scrollArea.clientHeight;
+                if (distanceFromBottom < 120) appendDriveGalleryBatch();
+            };
+            scrollArea.addEventListener('scroll', driveGalleryScrollHandler, { passive: true });
         };
 
         const renderDriveGallery = () => {
@@ -1002,6 +1013,7 @@
 
             grid.innerHTML = '';
             driveGalleryRenderedCount = 0;
+            document.getElementById('drive-gallery-scroll')?.scrollTo({ top: 0 });
             appendDriveGalleryBatch();
             setupDriveGalleryInfiniteScroll();
         };
