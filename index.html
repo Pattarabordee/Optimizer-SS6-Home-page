@@ -423,21 +423,12 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-secondary mb-4">สมุดพกนักพัฒนา</h2>
-                <p class="text-gray-500 max-w-2xl mx-auto text-lg">บันทึกตัวตนสมาชิกจาก Google Sheet โชว์ความเชี่ยวชาญและ Passion ด้าน AI</p>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
                 <div class="bg-white border theme-surface-outline rounded-xl p-5 shadow-sm">
                     <p class="text-sm text-gray-500">สมาชิกทั้งหมด</p>
                     <p class="text-3xl font-bold text-secondary"><span id="member-count">0</span> คน</p>
-                </div>
-                <div class="bg-white border theme-surface-outline rounded-xl p-5 shadow-sm">
-                    <p class="text-sm text-gray-500">มีข้อมูลความสนใจ AI</p>
-                    <p class="text-3xl font-bold text-secondary"><span id="interest-count">0</span> คน</p>
-                </div>
-                <div class="bg-white border theme-surface-outline rounded-xl p-5 shadow-sm">
-                    <p class="text-sm text-gray-500">แหล่งข้อมูล</p>
-                    <p class="text-lg font-bold text-secondary">Google Sheet</p>
                 </div>
             </div>
 
@@ -913,7 +904,6 @@
             if (!grid) return;
 
             document.getElementById('member-count').textContent = optimizerMembers.length;
-            document.getElementById('interest-count').textContent = optimizerMembers.filter((member) => splitInterests(member.interests).length).length;
 
             grid.innerHTML = optimizerMembers.map((member, index) => {
                 const displayName = [member.firstName, member.lastName].filter(Boolean).join(' ') || member.nickTh || member.nickEn || 'Optimizer';
